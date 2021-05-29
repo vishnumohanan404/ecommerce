@@ -1,0 +1,82 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title pl-3"> Add User</h4>
+                </div>
+                <div class="card-body ">
+
+                    {{#if status}}
+                    <p class="pl-3">{{status}}</p>
+                    {{/if}}
+                    <form action="/admin/add-user" method="POST" id="addUser">
+                        <div class="form-group  ">
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="firstname" placeholder="First Name"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="lastname" placeholder="Last Name"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="email" placeholder="johndoe@email.com"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="password" name="password" placeholder="Password"
+                                    class="single-input form-control" id="password">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="password" name="cnfpassword" placeholder="Confirm Password"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="phone" placeholder="Phone number"
+                                    class="single-input form-control">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center pt-3 pb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="/admin/users" class="btn btn-primary"> Back </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#addUser").validate({
+            rules: {
+                firstname: {
+                    required: true,
+                    minlength: 5
+                },
+                lastname: {
+                    required: true,
+                    minlength: 5
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                cnfpassword: {
+                    required:true,
+                    equalTo: '#password'
+                },
+                phone: {
+                    required: true
+                }
+            }
+        })
+    })
+</script>

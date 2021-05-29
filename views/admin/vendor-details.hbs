@@ -1,0 +1,160 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title ml-3"> Vendor Details</h4>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Name: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{result.name}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Email: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{result.email}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Status </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{status}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Total Sales: </h5>
+                            </td>
+                            <td>
+                                <h5 class="card-category ml-5">{{response.delivered}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Total Products: </h5>
+                            </td>
+                            <td>
+                                <h5 class="card-category ml-5">{{response.products}} </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Total Delivered: </h5>
+                            </td>
+                            <td>
+                                <h5 class="card-category ml-5">{{response.delivered}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Orders in Shipment: </h5>
+                            </td>
+                            <td>
+                                <h5 class="card-category ml-5">{{response.shipped}}</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Total Cancelled: </h5>
+                            </td>
+                            <td>
+                                <h5 class="card-category ml-5">{{response.cancelled}}</h5>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- second row --}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title pl-3"> Vendor Products</h4>
+                </div>
+                <div class="card-body" id="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>
+                                    Product Name
+                                </th>
+                                <th style="text-align: left;">
+                                    Images
+                                </th>
+                                <th style="text-align: center;">
+                                    Price
+                                </th>
+                                <th style="text-align: center;">
+                                    Category
+                                </th>
+                                <th style="text-align: center;">
+                                    Offer
+                                </th>
+                                <th style="text-align: center;">
+                                    Off Price
+                                </th>
+                                <th style="text-align: center;">
+                                    View
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each products}}
+                                <tr>
+                                    <td>
+                                        {{this.productname}}
+                                    </td>
+                                    <td>
+                                        <a href="/vendor/view-product/{{this._id}}"><img
+                                                src="/product-images/{{this._id}}_image1.jpeg" alt="thumbnail"
+                                                height="100px" width="100px"></a>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{#if this.discount}}
+                                        {{this.actualPrice}}
+                                        {{else}}
+                                        {{this.price}}
+                                        {{/if}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{this.category}}
+                                    </td>
+                                    <td class="" style="text-align: center;">
+                                        {{#if this.discount}}
+                                        {{this.offPercentage}}%
+                                        {{else}}
+                                        0%
+                                        {{/if}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{#if discount}}
+                                        {{this.discountPrice}}
+                                        {{else}}
+                                        No Offer
+                                        {{/if}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <a href="/admin/view-product/{{this._id}}"
+                                            class="btn btn-outline-success">View</a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

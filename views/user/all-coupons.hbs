@@ -1,0 +1,123 @@
+<!--================Home Banner Area =================-->
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Coupons</h2>
+                        <p>Home <span>-</span>Coupons</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Cart Area =================-->
+<section class="cart_area padding_top">
+    {{#if coupons}}
+    <div class="container" id="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table" style="table-layout:fixed">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Coupons</th>
+                            <th scope="col" class="text-right">Discount</th>
+                            <th scope="col" class="text-right">Copy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coupons}}
+                        <tr>
+
+                            <td style="width: fit-content;">
+                                {{inc @index}}
+                            </td>
+                            <td>
+                                <h5 id="{{this._id}}">{{this.coupons.coupon}}</h5>
+                            </td>
+                            <td class="text-right">
+                                <h5>{{this.coupons.couponDesc}}</h5>
+                            </td>
+                            <td class="pr-2 text-right">
+                                <button type="button" class="btn btn-default btn-copy js-tooltip js-copy"
+                                    data-toggle="tooltip" data-placement="bottom" data-copy="{{this.coupons.coupon}}"
+                                    title="Copy to clipboard"><i class="fas fa-copy"></i></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" href="#">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="container ">
+            <div class="cart_inner ">
+                <div class="breadcrumb_iner_item" style="justify-content: center;">
+
+                    <div class="d-flex justify-content-center">
+                        <h2 class="">Your dont have any coupons.</h2>
+                    </div>
+
+                </div>
+                <div class="checkout_btn_inner float-right mt-5">
+                    <a class="btn_1" href="/all-products">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+</section>
+<!--================End Cart Area =================-->
+
+<script>
+    function copyToClipboard(text, el) {
+        var copyTest = document.queryCommandSupported('copy');
+        var elOriginalText = el.attr('data-original-title');
+
+        if (copyTest === true) {
+            var copyTextArea = document.createElement("textarea");
+            copyTextArea.value = text;
+            document.body.appendChild(copyTextArea);
+            copyTextArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'Copied!' : 'Whoops, not copied!';
+                alert(msg)
+                el.attr('data-original-title', msg).tooltip('show');
+            } catch (err) {
+                console.log('Oops, unable to copy');
+            }
+            document.body.removeChild(copyTextArea);
+            el.attr('data-original-title', elOriginalText);
+        } else {
+            // Fallback if browser doesn't support .execCommand('copy')
+            window.prompt("Copy to clipboard: Ctrl+C or Command+C, Enter", text);
+        }
+    }
+
+    $(document).ready(function () {
+        // Initialize
+        // ---------------------------------------------------------------------
+
+        // Tooltips
+        // Requires Bootstrap 3 for functionality
+        $('.js-tooltip').tooltip();
+
+        // Copy to clipboard
+        // Grab any text in the attribute 'data-copy' and pass it to the 
+        // copy function
+        $('.js-copy').click(function () {
+            var text = $(this).attr('data-copy');
+            var el = $(this);
+            copyToClipboard(text, el);
+        });
+    });
+</script>

@@ -1,0 +1,52 @@
+<div class="content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card " data-aos="fade-up-right">
+        <div class="card-header">
+          <h4 class="card-title">Total Products</h4>
+          <h1 class="card-title text-info">{{result.products}}</h1>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card" data-aos="fade-up">
+        <div class="card-header">
+          <h4 class="card-title">Total Customers</h4>
+          <h1 class="card-title text-info">{{result.customers}}</h1>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card " data-aos="fade-up-left">
+        <div class="card-header">
+          <h4 class="card-title">Total Orders</h4>
+          <h1 class="card-title text-info">{{result.orders}}</h1>
+        </div>
+        <div class="card-body mb-0">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center" data-aos="fade-right">
+    <div class="col-4-lg mr-5 mt-5">
+      <canvas id="barChart" width="400" height="400"></canvas>
+    </div>
+    <div class="col-6-lg ml-5 mt-5">
+      <canvas id="donutChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+</div>
+</div>

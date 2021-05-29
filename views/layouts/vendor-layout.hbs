@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/v.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Vendor
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+
+  {{!-- demo aos library --}}
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- CSS Files -->
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  {{!-- CROPPERJS --}}
+  <link rel="stylesheet" href="https://fengyuanchen.github.io/cropperjs/css/cropper.css" />
+  <script src="https://fengyuanchen.github.io/cropperjs/js/cropper.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  {{!-- Boootstrap CSS for modal in crop --}}
+  {{!--
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> --}}
+  {{!-- Test jquery for Cropper.js --}}
+</head>
+
+<body class="user-profile">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+  {{#if vendor}}
+  {{>vendor-header}}
+  {{/if}}
+  {{{body}}}
+
+  {{!-- scripts --}}
+  {{!--aos library --}}
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <!--   Core JS Files   -->
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
+  <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="/assets/demo/demo.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+
+  {{!-- script for jquery validation --}}
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+  {{!-- Pdf --}}
+  <script type="text/javascript" src="/javascript/html2canvas.js"></script>
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+  <script src="https://unpkg.com/jspdf-autotable@3.5.14/dist/jspdf.plugin.autotable.js"></script>
+  <script>
+
+
+    function downloadCustomersPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+
+      doc.autoTable({
+        html: '#customersTable',
+        startY: 60,
+        styles: {
+          fontSize: 50,
+          cellWidth: 'wrap'
+        },
+        columnStyles: {
+          1: { columnWidth: 'auto' }
+        }
+      });
+
+      doc.save("Customers Report" + ".pdf");
+
+    }
+
+
+    document.querySelector('#customersPDF').addEventListener('click', downloadCustomersPDF);
+  </script>
+  <script>
+    function downloadProductsPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+
+      doc.autoTable({
+        html: '#productsTable',
+        startY: 60,
+        styles: {
+          fontSize: 50,
+          cellWidth: 'wrap'
+        },
+        columnStyles: {
+          1: { columnWidth: 'auto' }
+        }
+      });
+
+      doc.save("Products Report" + ".pdf");
+
+    }
+    document.querySelector('#productsPDF').addEventListener('click', downloadProductsPDF);
+
+
+  </script>
+
+  <script>
+
+    function downloadOrdersPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+
+      doc.autoTable({
+        html: '#ordersTable',
+        startY: 60,
+        styles: {
+          fontSize: 50,
+          cellWidth: 'wrap'
+        },
+        columnStyles: {
+          1: { columnWidth: 'auto' }
+        }
+      });
+
+      doc.save("Orders Report" + ".pdf");
+
+    }
+
+    window.onload = function () {
+      document.querySelector('#ordersPDF').addEventListener('click', downloadOrdersPDF);
+    }
+  </script>
+
+
+
+
+
+
+  {{!-- demo crop --}}
+  <script>
+    $(document).ready(function () {
+      var $modal = $('#modal_crop');
+      var $modal2 = $('#modal_crop2');
+      var $modal3 = $('#modal_crop3');
+      var crop_image = document.getElementById('sample_image');
+      var crop_image2 = document.getElementById('sample_image2');
+      var crop_image3 = document.getElementById('sample_image3');
+      var cropper;
+      var cropper2;
+      var cropper3;
+
+      $('#upload_image').change(function (event) {
+        var selectedFile = this.files[0];
+        var idxDot = selectedFile.name.lastIndexOf(".") + 1;
+        var extFile = selectedFile.name.substr(idxDot, selectedFile.name.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile == "svg" || extFile == "gif" || extFile == "jfif") {
+          //do whatever want to do
+          let files = event.target.files;
+          let done = function (url) {
+            crop_image.src = url;
+            $modal.modal('show');
+          };
+          if (files && files.length > 0 && files[0].size < 2000000) {
+            reader = new FileReader();
+            reader.onload = function (event) {
+              done(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+          } else {
+            alert("File is too big!");
+            files[0].value = "";
+          }
+        } else {
+          alert("Only jpg/jpeg, png, gif and svg files are allowed!");
+        }
+
+      });
+      $modal.on('shown.bs.modal', function () {
+        cropper = new Cropper(crop_image, {
+          aspectRatio: 1,
+          viewMode: 3,
+
+          preview: '.preview',
+          imageSmoothingEnabled: false,
+          imageSmoothingQuality: 'high'
+        });
+      }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+        cropper.clear();
+        cropper.reset();
+        cropper = null;
+        document.getElementById('upload_image').value = ""
+      });
+      $('.modal_close').click(function () {
+        $modal.modal('hide')
+        $modal2.modal('hide')
+        $modal3.modal('hide')
+      })
+      $('#restore').click(function () {
+        document.getElementById('imageView').removeAttr("src")
+        document.getElementById('base64_image').value = ''
+      })
+      $('#restore2').click(function () {
+        document.getElementById('imageView2').removeAttr("src")
+        document.getElementById('base64_image2').value = ''
+      })
+      $('#restore3').click(function () {
+        document.getElementById('imageView3').removeAttr("src")
+        document.getElementById('base64_image3').value = ''
+      })
+      $('#crop_and_upload').click(function () {
+        canvas = cropper.getCroppedCanvas({
+          width: 400,
+          height: 400
+        });
+        canvas.toBlob(function (blob) {
+          url = URL.createObjectURL(blob);
+          var reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = function () {
+            var base64data = reader.result;
+
+            document.getElementById('imageView').src = reader.result;
+            document.getElementById('base64_image').setAttribute("value", base64data);
+            $modal.modal('hide');
+            $.ajax({
+              url: '/vendor/add-products',
+              data: { crop_image: base64data },
+              success: function (data) {
+
+                $modal.modal('hide');
+              }
+            });
+          };
+        });
+      });
+
+
+      //CROP TWO
+      $('#upload_image2').change(function (event) {
+        var selectedFile = this.files[0];
+        var idxDot = selectedFile.name.lastIndexOf(".") + 1;
+        var extFile = selectedFile.name.substr(idxDot, selectedFile.name.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile == "svg" || extFile == "gif" || extFile == "jfif") {
+          //do whatever want to do
+          let files = event.target.files;
+          let done = function (url) {
+            crop_image2.src = url;
+            $modal2.modal('show');
+          };
+          if (files && files.length > 0 && files[0].size < 2000000) {
+            reader2 = new FileReader();
+            reader2.onload = function (event) {
+              done(reader2.result);
+            };
+            reader2.readAsDataURL(files[0]);
+          } else {
+            alert("File is too big!");
+            files[0].value = "";
+          }
+        } else {
+          alert("Only jpg/jpeg, png, gif and svg files are allowed!");
+        }
+      });
+      $modal2.on('shown.bs.modal', function () {
+        cropper2 = new Cropper(crop_image2, {
+          aspectRatio: 1,
+          viewMode: 3,
+          preview: '.preview2',
+          imageSmoothingEnabled: false,
+          imageSmoothingQuality: 'high'
+        });
+      }).on('hidden.bs.modal', function () {
+        cropper2.destroy();
+        cropper2.clear();
+        cropper2.reset();
+        cropper2 = null;
+        document.getElementById('upload_image2').value = ""
+      });
+      $('#crop_and_upload2').click(function () {
+        canvas2 = cropper2.getCroppedCanvas({
+          width: 400,
+          height: 400
+        });
+        canvas2.toBlob(function (blob) {
+          url = URL.createObjectURL(blob);
+          var reader2 = new FileReader();
+          reader2.readAsDataURL(blob);
+          reader2.onloadend = function () {
+            var base64data2 = reader2.result;
+
+            document.getElementById('imageView2').src = reader2.result;
+            document.getElementById('base64_image2').setAttribute("value", base64data2);
+            $modal2.modal('hide');
+            $.ajax({
+              url: '/vendor/add-products',
+              data: { crop_image: base64data2 },
+              success: function (data) {
+                console.log('hello ajax')
+                $modal2.modal('hide');
+              }
+            });
+          };
+        });
+      })
+      //CROP TWO END
+
+      //CROP THREE
+      $('#upload_image3').change(function (event) {
+        var selectedFile = this.files[0];
+        var idxDot = selectedFile.name.lastIndexOf(".") + 1;
+        var extFile = selectedFile.name.substr(idxDot, selectedFile.name.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile == "svg" || extFile == "gif" || extFile == "jfif") {
+          //do whatever want to do
+          let files = event.target.files;
+          let done = function (url) {
+            crop_image3.src = url;
+            $modal3.modal('show');
+          };
+          if (files && files.length > 0 && files[0].size < 2000000) {
+            reader3 = new FileReader();
+            reader3.onload = function (event) {
+              done(reader3.result);
+            };
+            reader3.readAsDataURL(files[0]);
+          } else {
+            document.getElementById('upload_image3').value = ""
+            alert("File is too big!");
+            files[0].value = "";
+          }
+        } else {
+          alert("Only jpg/jpeg, png, gif and svg files are allowed!");
+        }
+      });
+      $modal3.on('shown.bs.modal', function () {
+        cropper3 = new Cropper(crop_image3, {
+          aspectRatio: 1,
+          viewMode: 3,
+          preview: '.previewt',
+          imageSmoothingEnabled: false,
+          imageSmoothingQuality: 'high'
+        });
+      }).on('hidden.bs.modal', function () {
+        cropper3.destroy();
+        cropper3.clear();
+        cropper3.reset();
+        cropper3 = null;
+        document.getElementById('upload_image3').value = ""
+      });
+
+
+      $('#crop_and_upload3').click(function () {
+        canvas3 = cropper3.getCroppedCanvas({
+          width: 400,
+          height: 400
+        });
+        canvas3.toBlob(function (blob) {
+          url = URL.createObjectURL(blob);
+          var reader3 = new FileReader();
+          reader3.readAsDataURL(blob);
+          reader3.onloadend = function () {
+            var base64data3 = reader3.result;
+
+            document.getElementById('imageView3').src = reader3.result;
+            document.getElementById('base64_image3').setAttribute("value", base64data3);
+            $modal3.modal('hide');
+            $.ajax({
+              url: '/vendor/add-products',
+              data: { crop_image: base64data3 },
+              success: function (data) {
+                $modal3.modal('hide');
+              }
+            });
+          };
+        });
+
+      });
+      //CROP THREE END
+    });
+
+
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+  <script>
+    var ctx2 = document.getElementById('donutChart').getContext('2d');
+    var donutChart = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: [{{ #each products }} "{{this.productname}}" {{ #unless @last}}, { { /unless}}{{/each } }],
+    datasets: [{
+      label: 'Categories of products',
+      data: [{{ #each products }} "{{this.stocks}}" {{ #unless @last}}, { { /unless}}{{/each } }],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+        borderWidth: 1
+        }]
+      },
+    options: {
+      responsive: true,
+        scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    });
+    var ctx3 = document.getElementById('barChart').getContext('2d');
+    var barChart = new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['Total Orders', 'Total Products', 'Customers'],
+        datasets: [{
+          label: 'Order Analytica',
+          data: [{{ result.orders }}, {{ result.products }}, {{ result.customers }}],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+        borderWidth: 1
+        }]
+      },
+    options: {
+      responsive: true,
+        scales: {
+        x: {
+          stacked: true
+        },
+        y: {
+          stacked: true
+        }
+      }
+    }
+    });
+  </script>
+  
+  
+
+</body>
+
+</html>

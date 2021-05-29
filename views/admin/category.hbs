@@ -1,0 +1,153 @@
+<style>
+  table {
+    table-layout: auto;
+    width: 100%
+  }
+</style>
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" data-aos="fade-up">
+        <div class="card-header">
+          <h4 class="card-title pl-2">Category</h4>
+        </div>
+        <div class="m-2 ">
+          <div class="pr-4  pb-3 text-right">
+            <a href="/admin/add-category" class="btn btn-lg btn-success">+ Add New Category </a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" style="">
+                <thead class=" text-primary">
+                  <th>
+                    Category
+                  </th>
+                  <th style="text-align: right;">
+                    Offers
+                  </th>
+                  <th class="text-right">
+                    Delete
+                  </th>
+                </thead>
+                <tbody>
+                  {{#each objects}}
+                  <tr>
+
+                    <td>
+                      {{this.categories}}
+                    </td>
+                    <td style="text-align: right;">
+                      {{#if this.offer}}
+                      {{this.offPercentage}}%
+                      <button type="button" onclick="modalCall('{{this._id}}','{{this.categories}}')"
+                        class="btn m-0 ml-2 p-1 btn-info text-right" data-toggle="modal" data-target="#form"
+                        data-dismiss="modal"><i class="fas fa-pencil-alt"></i></button>
+
+                      {{else}}
+                      0%
+                      <button type="button" onclick="modalCall('{{this._id}}','{{this.categories}}')"
+                        class="btn m-0 ml-2 p-1 btn-info text-right" data-toggle="modal" data-target="#form"
+                        data-dismiss="modal"><i class="fas fa-pencil-alt"></i></button>
+                      {{/if}}
+                    </td>
+                    <td class="text-right">
+                      <a href="/admin/delete-category/{{this._id}}" class="btn btn-outline-warning"
+                        onclick="return confirm('Are you sure to delete {{this.Name}}?')">Delete</a>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- modal --}}
+<div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel">Add Offer</h5>
+        <button type="button" class="modal_close close " aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="offerform" action="/admin/post-offer" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="add1">Offer Percentage</label>
+            <input type="text" class="form-control" id="offer" aria-describedby="emailHelp" placeholder="No Offer"
+              name="offer">
+            <input type="hidden" class="form-control" id="categoryid" aria-describedby="emailHelp" name="categoryid">
+            <input type="hidden" class="form-control" id="categoryname" aria-describedby="emailHelp"
+              name="categoryname">
+          </div>
+        </div>
+        <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <button type="button" class="btn btn-danger mr-3" onclick="removeOffer()" id="removeBtn" style="display: none;">Remove
+            Offer</button>
+          <button type="submit" class="btn btn-success" onclick="">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{!-- modal end --}}
+
+<script>
+  $(function () {
+    $("#offerform").validate({
+      ignore: "",
+      rules: {
+        offer: {
+          required: true,
+          range: [0, 100]
+        }
+      },
+      errorPlacement: function (error, element) {
+        error.insertAfter(element.parent());
+      }
+    })
+  })
+
+  function modalCall(id, name) {
+    $.ajax({
+      url: '/admin/get-offer',
+      data: { id: id },
+      method: 'get',
+      success: (response) => {
+        if (response.offer) {
+          document.getElementById('offer').value = response.offPercentage
+          document.getElementById('categoryid').value = id
+          document.getElementById('categoryname').value = name
+          document.getElementById('removeBtn').style.display = "block"
+        } else {
+          document.getElementById('offer').value = ""
+          document.getElementById('categoryid').value = id
+          document.getElementById('categoryname').value = name
+          document.getElementById('removeBtn').style.display = "none"
+        }
+      }
+    })
+  }
+
+  function removeOffer() {
+    let id   = document.getElementById('categoryid').value 
+    let name = document.getElementById('categoryname').value 
+    $.ajax({
+      url: '/admin/remove-offer',
+      method: 'post',
+      data: { 
+        catId   : id,
+        catName : name
+      },
+      success: () => {
+        location.reload()
+      }
+    })
+  }
+
+</script>

@@ -1,0 +1,66 @@
+
+<div class="panel-header panel-header-sm"> </div>
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" >
+        <div class="card-header">
+          <h4 class="card-title pl-2">Users</h4>
+        </div>
+        <div class="m-2">
+          <div class="pr-4  pb-3 text-right">
+            <a href="/admin/add-user" class="btn btn-lg btn-success">+ Add New User </a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" style="table-layout:fixed">
+                <thead class=" text-primary">
+                  <th>
+                    Username
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th class="text-right">
+                    Details
+                  </th>
+                  <th class="text-right">
+                    Block
+                  </th>
+                </thead>
+                <tbody>
+                  {{#each users}}
+                  <tr>
+                    <td>
+                      {{this.firstname}}
+                    </td>
+                    <td>
+                      {{this.email}}
+                    </td>
+                    <td class="text-right">
+                      <a href="/admin/view-user/{{this._id}}" class="btn btn-outline-warning">View</a>
+                    </td>
+
+                    <td class="text-right">
+                      {{#if this.block}}
+                      <a href="/admin/unblock-user/{{this._id}}" style="width: 150px;" class="btn btn-outline-warning"
+                        onclick="return confirm('Are you sure to unblock {{this.firstname}}?')">Unblock</a>
+                      {{else}}
+                      <a href="/admin/block-user/{{this._id}}" style="width: 150px;" class="btn btn-outline-warning"
+                        onclick="return confirm('Are you sure to block {{this.firstname}}?')">Block</a>
+                      {{/if}}
+                    </td>
+                    <input type="hidden" value="{{this._id}}" id="{{this._id}}user">
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{!-- script --}}
+
+  

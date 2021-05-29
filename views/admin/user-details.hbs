@@ -1,0 +1,47 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title ml-3"> User Details</h4>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Name: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{user.firstname}} {{user.lastname}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Email: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{user.email}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Phone: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5">{{user.phone}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Hashed Password: </h5>
+                            </td>
+                            <td>
+                                <label class="card-category ml-5 mb-3">{{user.password}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

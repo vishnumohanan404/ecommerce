@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/admin.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+    {{!-- demo aos library --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- CSS Files -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="/assets/demo/demo.css" rel="stylesheet" />
+  <link rel="shortcut icon" href="#">
+
+</head>
+
+<body class="user-profile">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  {{#if admin}}
+  
+  {{>admin-header}}
+  {{/if}}
+  {{{body}}}
+
+  {{!-- scripts --}}
+  {{!-- excel export --}}
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js"></script>
+  {{!-- demo aos library scripts --}}
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+  AOS.init();
+  </script>
+  <!--   Core JS Files   -->
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script>
+  <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+  <script src="/assets/demo/demo.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+
+
+  {{!-- jquerry validation --}}
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+  
+  {{!-- datatable --}}
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.table').DataTable();
+    });
+</script>
+  {{!-- pdf --}}
+<script type="text/javascript" src="/javascript/html2canvas.js"></script>   
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/jspdf-autotable@3.5.14/dist/jspdf.plugin.autotable.js"></script>
+
+<script>
+    window.html2canvas = html2canvas;
+    function downloadUserPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+    
+    doc.autoTable({
+    html: '#styledTable',
+    startY: 60,
+    styles: {
+      fontSize: 50,
+      cellWidth: 'wrap'
+    },
+    columnStyles: {
+      1: {columnWidth: 'auto'}
+    }
+    });
+
+      doc.save("User Report" + ".pdf");
+    
+  } 
+  function downloadOrderPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+    
+    doc.autoTable({
+    html: '#orderTable',
+    startY: 60,
+    styles: {
+      fontSize: 50,
+      cellWidth: 'wrap'
+    },
+    columnStyles: {
+      1: {columnWidth: 'auto'}
+    }
+    });
+
+      doc.save("Order Report" + ".pdf");
+    
+  } 
+   
+  window.onload=function(){
+    document.querySelector('#orderPDF').addEventListener('click', downloadOrderPDF);
+  }
+ 
+  
+  
+  document.querySelector('#jsPDF').addEventListener('click', downloadUserPDF);
+  
+</script>
+<script>
+  window.html2canvas = html2canvas;
+function downloadVendorPDF() {
+      let pdfsize = 'a0'
+      let doc = new jspdf.jsPDF('l', 'pt', pdfsize);
+    
+    doc.autoTable({
+    html: '#vendorTable',
+    startY: 60,
+    styles: {
+      fontSize: 50,
+      cellWidth: 'wrap'
+    },
+    columnStyles: {
+      1: {columnWidth: 'auto'}
+    }
+    });
+
+      doc.save("Vendor Report" + ".pdf");
+    
+  }
+document.querySelector('#vendorPDF').addEventListener('click', downloadVendorPDF);
+</script>
+  {{!-- chartjs --}}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [{{#each orderDetails}} "{{this.date}}" {{#unless @last}},{{/unless}}{{/each}}],
+        datasets: [{
+          label: 'Revenue Stats',
+          data: [{{#each revenueData}} "{{this.total}}" {{#unless @last}},{{/unless}}{{/each}}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    var ctx2 = document.getElementById('donutChart').getContext('2d');
+    var donutChart = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: [{{#each categoryDetails}} "{{this.categories}}" {{#unless @last}},{{/unless}}{{/each}}],
+        datasets: [{
+          label: 'Categories of products',
+          data: [{{#each categoryDetails}} "{{this.count}}" {{#unless @last}},{{/unless}}{{/each}}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    var ctx3 = document.getElementById('barChart').getContext('2d');
+    var barChart = new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels: ['Total Orders', 'Total Products', 'Shipped Products', 'Delivered Products'],
+        datasets: [{
+          label: 'Order Analytica',
+          data: [{{response.orders}}, {{response.products}}, {{response.shipped}},{{response.delivered}}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true
+          }
+        }
+      }
+    });
+    var ctx3 = document.getElementById('polarChart').getContext('2d');
+    var polarChart = new Chart(ctx3, {
+      type: 'polarArea',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true
+          }
+        }
+      }
+    });
+    </script>
+  
+</body>
+
+</html>

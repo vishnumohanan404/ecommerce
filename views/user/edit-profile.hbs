@@ -1,0 +1,262 @@
+<style>
+    .imageInput {
+        position: absolute;
+        font-size: 50px;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+
+    .hello {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .modal-lg {
+        max-width: 1000px !important;
+    }
+
+    .preview {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        overflow: hidden
+    }
+
+    .profile-pic {
+        border-radius: 50%;
+        height: 150px;
+        width: 150px;
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: multiply;
+        vertical-align: middle;
+        text-align: center;
+        color: transparent;
+        transition: all .3s ease;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .profile-pic:hover {
+        background-color: rgba(0, 0, 0, .5);
+        z-index: 10000;
+        color: #fff;
+        transition: all .3s ease;
+        text-decoration: none;
+    }
+
+    .profile-pic span {
+        display: inline-block;
+        padding-top: 4.5em;
+        padding-bottom: 4.5em;
+    }
+
+    form input[type="file"] {
+        display: none;
+        cursor: pointer;
+    }
+</style>
+<section class="confirmation_part padding_top">
+    <div class="container">
+        <div class="row">
+            <div class=" col-lx-4 col-lg-12 d-flex justify-content-center">
+                <div class="single_confirmation_details pl-0 pr-0">
+                    <div class="d-flex justify-content-center mb-5">
+                        <h3>Edit Personal Details</h3>
+                    </div>
+                    <form action="/edit-profile" method="POST" id="edit-profile" enctype="multipart/form-data">
+                        <div class="d-flex justify-content-center">
+                            <label for="fileToUpload">
+                                {{#if imageExist}}
+                                <div id="imageView" class="profile-pic"
+                                    style="background-image:  url('/profile-pictures/{{user._id}}.jpeg') ">
+                                    <span><i class="fas fa-user-edit" title="Change profile picture"></i></span>
+                                </div>
+                                {{else}}
+                                <div id="imageView" class="profile-pic"
+                                    style="background-image:  url('/profile-pictures/dummy.png') ">
+                                    <span><i class="fas fa-user-plus" title="Add a profile picture"></i> </span>
+                                </div>
+                                {{/if}}
+                                
+                            </label>
+                            
+                            <input type="File" name="fileToUpload" id="fileToUpload" accept="image/*">
+                            <input type="hidden" name="base64_image" id="base64_image" value="{{imageB64}}">
+                        </div>
+                        {{#if imageExist}}
+                        <div class="d-flex justify-content-center mb-5">
+                            <button class="btn"  title="Remove Profile Picture" type="button" onclick="removeProfilePicture('{{user._id}}')"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                        {{/if}}
+                        {{!-- modal --}}
+                        <div class="modal fade" id="modal_crop" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Crop Image And Upload</h5>
+                                        <button type="button" class="close modal_close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="img-container">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <img src="" id="sample_image" />
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <h5 class="modal-title d-flex justify-content-center">Preview</h5>
+                                                    <div class="preview ml-5 border border-primary "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="crop_and_upload" class="btn btn-primary">Crop</button>
+                                        <button type="button" class="btn btn-secondary modal_close" data-dismiss="modal"
+                                            id="">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- modal --}}
+                        <table style="border-spacing:200px 10px ;border-collapse: separate;table-layout:fixed;margin:0;"
+                            class="d-flex justify-content-center">
+                            <tr>
+                                <td>First name:</td>
+                                <td width="300px" class="text-right field"><input type="text" name="firstname"
+                                        placeholder="First Name" class="single-input" value="{{userDetails.firstname}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Last name:</td>
+                                <td class="text-right"><input type="text" name="lastname" placeholder="Last Name"
+                                        class="single-input" value="{{userDetails.lastname}}"></td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td class="text-right"><input type="text" name="email" placeholder="johndoe@email.com"
+                                        class="single-input" value="{{userDetails.email}}"></td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td class="text-right"><input type="text" name="phone" placeholder="Phone number"
+                                        class="single-input" value="{{userDetails.phone}}"> </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-right">
+                                    <a class="text-right" href="/change-password">Change password</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="d-flex justify-content-center mb-5 mt-5">
+                            <button type="submit" class="btn_3">Save</button>
+                            <a class="btn_3 ml-5" href="/profile">Back</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(document).ready(function () {
+        var $modal = $('#modal_crop');
+        var crop_image = document.getElementById('sample_image');
+        var cropper;
+        $('#fileToUpload').change(function (event) {
+            var selectedFile = this.files[0];
+            var idxDot = selectedFile.name.lastIndexOf(".") + 1;
+            var extFile = selectedFile.name.substr(idxDot, selectedFile.name.length).toLowerCase();
+            if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile == "svg" || extFile == "gif" || extFile == "jfif") {
+                //do whatever want to do
+                let files = event.target.files;
+                let done = function (url) {
+                    crop_image.src = url;
+                    $modal.modal('show');
+                };
+                if (files && files.length > 0 && files[0].size < 2000000) {
+                    reader = new FileReader();
+                    reader.onload = function (event) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(files[0]);
+                } else {
+                    alert("File is too big!");
+                    files[0].value = "";
+                }
+            } else {
+                alert("Only jpg/jpeg, png, gif, jfif and svg files are allowed!");
+            }
+        });
+        $modal.on('shown.bs.modal', function () {
+            cropper = new Cropper(crop_image, {
+                aspectRatio: 1,
+                viewMode: 3,
+                preview: '.preview',
+                imageSmoothingEnabled: false,
+                imageSmoothingQuality: 'high'
+            });
+        }).on('hidden.bs.modal', function () {
+            cropper.destroy();
+            cropper.clear();
+            cropper.reset();
+            cropper = null;
+            document.getElementById('fileToUpload').value = ""
+        });
+        $('.modal_close').click(function () {
+            $modal.modal('hide')
+        })
+        $('#restore').click(function () {
+            document.getElementById('imageView').removeAttr("src")
+            document.getElementById('base64_image').value = ''
+        })
+        $('#crop_and_upload').click(function () {
+            canvas = cropper.getCroppedCanvas({
+                width: 400,
+                height: 400
+            });
+            canvas.toBlob(function (blob) {
+                url = URL.createObjectURL(blob);
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function () {
+                    var base64data = reader.result;
+                    var img = new Image();
+                    img.src = reader.result;
+                    //trial
+                    var image = img.src
+                    //trial ends
+                    document.getElementById('imageView').style.backgroundImage = 'url(' + image + ')';
+                    document.getElementById('base64_image').setAttribute("value", base64data);
+                    $modal.modal('hide');
+
+                };
+            });
+        });
+    });
+
+    function removeProfilePicture(id){
+        alert('hello')
+        $.ajax({
+            url:    '/delete-profile-picture',
+            data:   {id},
+            method: 'post',
+            success: (response)=>{
+                document.getElementById('base64_image').value=""
+                location.reload()
+                
+            }
+        
+        })
+    }
+
+</script>

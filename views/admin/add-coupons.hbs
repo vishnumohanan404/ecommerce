@@ -1,0 +1,99 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title pl-3"> Add New User Coupon</h4>
+                </div>
+                <div class="card-body ">
+
+                    
+                    <form action="/admin/add-coupon" method="POST" id="addcoupon">
+                    {{#if msg}}
+                    <p class="pl-3 text-success">Coupon added successfully</p>
+                    {{/if}}
+                        <div class="form-group  ">
+                            <div class="col-md-12 form-group mt-10">
+                                <select id="user" name="user" class="form-select  form-select-lg form-control   "
+                                    aria-placeholder="Category">
+                                    <option value="category" aria-placeholder="Category" aria-hidden="true" disabled
+                                        selected hidden>Assign user
+                                    </option>
+                                    {{#each users}}
+                                    <option value="{{this._id}}" class="form-control " placeholder="Category">
+                                        {{this.firstname}} {{this.lastname}} ({{this.email}})
+                                    </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <select id="coupontype" name="coupontype" class="form-select  form-select-lg form-control   "
+                                    aria-placeholder="Category">
+                                    <option value="category" aria-placeholder="Category" aria-hidden="true" disabled
+                                        selected hidden>Choose
+                                        coupon type
+                                    </option>
+                                    {{#each types}}
+                                    <option value="{{this.types}}" class="form-control " placeholder="Category">
+                                        {{this.types}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="text" onkeyup="this.value = this.value.toUpperCase();"
+                                    placeholder="Enter default text for generated coupons"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="desc" placeholder="Description"
+                                    class="single-input form-control" id="password">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="offer" placeholder="Offer in rupees"
+                                    class="single-input form-control">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center pt-3 pb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="/admin/all-coupon" class="btn btn-primary"> Back </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{!-- jquery validation --}}
+
+<script>
+    $(function () {
+        $("#addcoupon").validate({
+            rules: {
+                user:{
+                    required:true
+                },
+                coupontype: {
+                    required: true
+                },
+                text: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 3,
+                    lettersonly: true
+                },
+                desc: {
+                    required: true,
+                    minlength: 5
+                },
+                offer: {
+                    required: true,
+                    digits: true
+                }
+            }
+        })
+    })
+</script>

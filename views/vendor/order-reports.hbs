@@ -1,0 +1,81 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="display: inline-block;"> Orders</h4>
+                    {{#if orders}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="ordersPDF"
+                        style="display: inline-block;float:right;">Export PDF</button>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="ordersPDF"
+                        style="display: inline-block;float:right;" disabled>Export PDF</button>
+                    {{/if}}
+                </div>
+                <div>
+                    <p></p>
+                </div>
+                <div class="card-body" id="vendorsTable">
+                    <div class="table-responsive" >
+                        <table class="table" id="ordersTable">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Product Name
+                                </th>
+                                <th>
+                                    Order Id
+                                </th>
+                                <th>
+                                    Customer Name
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th class="pl-3">
+                                    Price
+                                </th>
+                                <th class="text-right">
+                                    Status
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each orders}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.cart.product.productname}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this._id}}</p>
+                                    </td>
+                                    <td >
+                                        <p class="m-0 text-info">{{this.billingDetails.firstname}} {{this.billingDetails.lastname}}</p>
+                                    </td>
+                                    <td class="pl-5"> 
+                                        <p class="m-0 text-info">{{this.cart.quantity}}</p>
+                                    </td>
+                                    <td class="pl-4">
+                                        <p class="m-0 text-info">{{this.total}}</p>
+                                    </td>
+                                    <td class="text-right" style="">
+                                        {{#if this.cart.product.status}}
+                                        <p class="m-0 text-info" id="shipped">{{this.cart.product.status}}</p>
+                                        {{else}}
+                                        <p class="m-0 text-info" id="shipped">{{this.orderStatus}}</p>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<!--================Home Banner Area =================-->
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="breadcrumb_iner">
+          <div class="breadcrumb_iner_item">
+            <h2>Cart</h2>
+            <p>Home <span>-</span>Cart</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Cart Area =================-->
+<section class="cart_area padding_top">
+  {{#if cart}}
+  <div class="container" id="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table" style="table-layout:fixed">
+          <thead>
+            <tr>
+              <th scope="col" style="width:400px">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Update</th>
+              <th scope="col">Discount</th>
+              <th scope="col" class="text-right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <input type="hidden" value="{{cartlength}}" id="cartlength">
+            {{#each cart}}
+            <tr>
+              
+              <td style="width: fit-content;">
+                <div class="media">
+                  <div class="d-flex ">
+                    <img src="product-images/{{this.product._id}}_image1.jpeg" alt="" height="100px" width="100px"
+                      class="" />
+                  </div>
+                  <div class="media-body">
+                    <p>{{this.product.productname}}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5>Rs.<span>{{this.product.actualPrice}}</span></h5>
+              </td>
+              <td>
+                <div class="product_count">
+                  <button class="btn cart-item-count "
+                    onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}'  ,-1)">
+                    <i class="ti-angle-down"></i>
+                  </button>
+                  <span id="{{this.product._id}}quantity">{{this.quantity}}</span>
+                  <button class="btn cart-item-count "
+                    onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">
+                    <i class="ti-angle-up"></i>
+                  </button>
+              </td>
+              <td>
+                <a href="/delete-cart-product/?item_id={{this.item}}&cart_id={{this._id}}" class="btn btn_4 m-0"
+                  onclick="return confirm('Are you sure to delete?')">Delete</a>
+              </td>
+              <td>{{#if this.product.discount}}- {{subtract this.product.actualPrice this.product.price}}{{else}}No Offers{{/if}}</td>
+              <td class="text-right">
+                <h5>Rs.<span id="{{this.product._id}}totalprice"> {{multiply this.product.price this.quantity}}</span>
+                </h5>
+              </td>
+            </tr>
+            <h5 style="display:none">Rs.<span id="{{this.product._id}}price">{{this.product.price}}</span></h5>
+            {{/each}}
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <h5>Subtotal</h5>
+              </td>
+              <td class="text-right">
+                <h5 id="subtotal">Rs. {{subtotal}}</h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="checkout_btn_inner float-right">
+          <a class="btn_1" href="#">Continue Shopping</a>
+          <a class="btn_1 checkout_btn_1" href="/checkout/?cart_id={{user._id}}&subtotal={{subtotal}}">Proceed to
+            checkout</a>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <div class="container ">
+      <div class="cart_inner ">
+        <div class="breadcrumb_iner_item" style="justify-content: center;">
+        
+            <div class="d-flex justify-content-center">
+            <h2 class="">Your cart is empty.</h2>
+            </div>
+        
+        </div>
+        <div class="checkout_btn_inner float-right mt-5">
+          <a class="btn_1" href="/all-products">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+</section>
+<!--================End Cart Area =================-->
+
+<script>
+
+</script>

@@ -1,0 +1,100 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" data-aos="fade-up">
+        <div class="card-header">
+          <h4 class="card-title" > Offers </h4>
+        </div>
+        <div>
+          <p>{{edit}}</p>  
+        </div>
+        <div class="pr-4 pt-3 pb-3 text-right">
+          <a href="/vendor/add-product" class="btn btn-lg btn-success " style="display: none;">+ Add Offers </a>
+        </div>
+        <div class="card-body" id="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  Product Name
+                </th>
+                <th style="text-align: left;">
+                  Images
+                </th>
+                <th style="text-align: center;">
+                  Price
+                </th>
+                <th style="text-align: center;">
+                  Category
+                </th>
+                <th style="text-align: center;">
+                  Offer
+                </th>
+                <th style="text-align: center;">
+                  Discount
+                </th>
+                <th style="text-align: center;">
+                  Off Price
+                </th>
+                <th style="text-align: center;">
+                  View
+                </th>
+              </thead>
+              <tbody>
+                {{#each result}}
+                <tr>
+                  <td>
+                    {{this.productname}}
+                  </td>
+                  <td>
+                    <a href="/vendor/view-product/{{this._id}}"><img src="/product-images/{{this._id}}_image1.jpeg"
+                        alt="thumbnail" height="100px" width="100px"></a>
+                  </td>
+                  <td style="text-align: center;">
+                    {{#if this.discount}}
+                    {{this.actualPrice}}
+                    {{else}}
+                    {{this.price}}
+                    {{/if}}
+                  </td>
+                  <td style="text-align: center;">
+                    {{this.category}}
+                  </td>
+                  
+                  <td class="" style="text-align: center;">
+                    {{#if this.discount}}
+                    {{this.offPercentage}}%
+                    {{else}}
+                    0%
+                    {{/if}}
+                    {{!-- <button type="button" onclick="modalCall('{{this._id}}')"
+                      class="btn m-0 ml-2 p-1 btn-info text-right" data-toggle="modal" data-target="#form"
+                      data-dismiss="modal"><i class="fas fa-pencil-alt"></i></button>
+                      {{#if this.discount}}
+                    <button type="button" onclick="removeOffer('{{this._id}}')"
+                      class="btn m-0 ml-2 p-1 btn-danger text-right"><i class="fas fa-trash"></i></button>
+                      {{/if}} --}}
+                  </td>
+                  <td style="text-align: center;">
+                   - {{subtract this.actualPrice this.discountPrice}}
+                  </td>
+                  <td style="text-align: center;">
+                    {{#if discount}}
+                    {{this.discountPrice}}
+                    {{else}}
+                    No Offer
+                    {{/if}}
+                  </td>
+                  <td style="text-align: center;">
+                    <a href="/vendor/view-product/{{this._id}}" class="btn btn-outline-success">View</a>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

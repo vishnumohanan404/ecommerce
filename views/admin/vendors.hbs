@@ -1,0 +1,60 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" data-aos="fade-up">
+        <div class="card-header">
+          <h4 class="card-title pl-5">Vendors</h4>
+        </div>
+        <div class="container justify-content">
+          <div class="pr-4  pb-3 text-right">
+            <a href="/admin/add-vendor" class="btn btn-lg btn-success">+ Add New Vendor </a>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>
+                    Username
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Details
+                  </th>
+                  <th class="text-right">
+                    Block
+                  </th>
+                </thead>
+                <tbody>
+                  {{#each vendors}}
+                  <tr>
+                    <td>
+                      {{this.name}}
+                    </td>
+                    <td>
+                      {{this.email}}
+                    </td>
+                    <td>
+                      <a href="/admin/view-vendor/{{this._id}}" class="btn btn-outline-warning">View</a>
+                    </td>
+
+                    <td class="text-right">
+                      {{#if this.block}}
+                      <a href="/admin/unblock-vendor/{{this._id}}" style="width: 150px;" class="btn btn-outline-warning"
+                        onclick="return confirm('Are you sure to unblock {{this.name}}?')">Unblock</a>
+                      {{else}}
+                      <a href="/admin/block-vendor/{{this._id}}" style="width: 150px;" class="btn btn-outline-warning"
+                        onclick="return confirm('Are you sure to block {{this.name}}?')">Block</a>
+                      {{/if}}
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

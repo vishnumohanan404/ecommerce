@@ -1,0 +1,142 @@
+<style>
+    #partitioned {
+        padding-left: 15px;
+        letter-spacing: 40px;
+        border: 0;
+        background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+        background-position: bottom;
+        background-size: 48px 1px;
+        background-repeat: repeat-x;
+        background-position-x: 35px;
+        width: 305px;
+        min-width: 305px;
+    }
+
+    #divInner {
+        left: 0;
+        position: sticky;
+    }
+
+    #divOuter {
+        width: 290px;
+        overflow: hidden;
+
+    }
+</style>
+
+<!--================login_part Area =================-->
+<section class="login_part padding_top">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_text text-center">
+                    <div class="login_part_text_iner">
+                        <h2>New to our Shop?</h2>
+                        <p>Register and become a part of this beautiful journey</p>
+                        <div class="inline-flex">
+                            <a href="/signup" class="btn_3 pl-4 pr-4">Create an Account</a>
+                            <a href="/otp-register-form" class="btn_3 pl-4 pr-4 ">Register with otp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_form">
+                    <div class="login_part_form_iner">
+                        <h3>Welcome Back ! <br>
+                            Please Sign in now</h3>
+                        {{#if loginError}}
+                        <p>Invalid Username or Password</p>
+                        {{/if}}
+                        <form class="row contact_form" action="/" method="post" novalidate="novalidate" id="otp-login">
+                            <div class="col-md-12 form-group p_star">
+                                <input type="tel" class="form-control" id="mobile" name="mobile" value=""
+                                    placeholder="10-digit mobile number">
+                                <p style="color: red; display: none;" id="error">Number not register with any account</p>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                {{!-- <div class="creat_account d-flex align-items-center">
+                                    <input type="checkbox" id="f-option" name="selector">
+                                    <label for="f-option">Remember me</label>
+                                </div> --}}
+                                <button type="submit" value="submit" class="btn_3">
+                                    Sent OTP
+                                </button>
+                                <a class="text-right" href="/login">Login with Email</a>
+                                <a class="lost_pass" href="" hidden>Re-send OTP?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================login_part end =================-->
+{{!-- scripts --}}
+<script>
+    $(function () {
+        $("#otp-login").validate({
+            rules: {
+                mobile: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10
+                }
+            },
+
+            submitHandler: function () {
+                    $('#error').hide()
+                    $("#resend-otp").hide()
+                    let mobile = $('#mobile').val()
+                    $.ajax({
+                        url: '/verify-otp-login',
+                        method: 'post',
+                        data: {
+                            mobile
+                        },
+                        async: false,
+                        success: (response) => {
+                            if (response.status) {
+                                console.log(response.status, response.mobile);
+                                $("#otp-login").replaceWith(`<form class="row contact_form" id="otp-login-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" type="text" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> <p style="color: red; display: none;" id="otp-incorrect">Incorrect OTP</p> </div> </div>  <div class="col-md-12 form-group"> <button type="submit" value="submit" id="" class="btn_3  justify-content-center"> Verify </button> </div> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
+                                document.getElementById('mobilehidden').value = response.mobile
+                                $("#resend-otp").show()
+                            } else {
+                                $('#error').show()
+                            }
+                            //2nd ajax on the same page after the success of first, this one is for the submit of verify button
+                            $(document).ready(function () {
+                                $('#otp-login-submit').submit((e) => {
+                                    e.preventDefault()
+                                    let mobile = $('#mobilehidden').val()
+                                    let otp = $('#partitioned').val()
+                                    $('#otp-incorrect').hide()
+                                    $.ajax({
+                                        url: '/otp-login-submit',
+                                        method: 'post',
+                                        data: {
+                                            otp, mobile
+                                        },
+                                        success: (response) => {
+                                            if (response.status) {
+                                                window.location.href = '/'
+                                            } else {
+                                                $('#otp-incorrect').show()
+                                            }
+                                        }
+                                    })
+
+                                })
+
+                            })
+                            //2nd ajax finish
+                        }
+                    })
+
+              
+                return false;
+            }
+        })
+    })
+</script>

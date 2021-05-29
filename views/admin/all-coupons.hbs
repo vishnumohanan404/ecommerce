@@ -1,0 +1,78 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" data-aos="fade-down">
+                <div class="card-header">
+                    <h4 class="card-title" style="display: inline-block"> Coupons </h4>
+                    <a href="/admin/add-coupon"  class="btn btn-sm btn-warning mt-3" id="addCoupons"
+                        style="display: inline-block;float:right;">Add new coupons</a>
+                </div>
+                <div>
+                    <p>{{edit}}</p>
+                </div>
+                <div class="card-body" id="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th style="text-align: left;">
+                                    Coupon Type
+                                </th>
+                                <th style="text-align: center;">
+                                    Coupon Code
+                                </th>
+                                <th style="text-align: center;">
+                                    User
+                                </th>
+                                <th style="text-align: center;">
+                                    Description
+                                </th>
+                                <th style="text-align: center;">
+                                    Offer
+                                </th>
+                                <th style="text-align: center;">
+                                    Status
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each coupons}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        {{this.couponType}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{this.coupon}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{this.user}}
+                                    </td>
+                                    <td class="" style="text-align: center;">
+                                        {{this.couponDesc}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{this.offer}}
+                                    </td>
+                                    {{#if this.status}}
+                                    <td style="text-align: center;">
+                                        Valid
+                                    </td>
+                                    {{else}}
+                                    <td style="text-align: center;">
+                                        Invalid
+                                    </td>
+                                    {{/if}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

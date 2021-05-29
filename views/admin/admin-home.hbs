@@ -1,0 +1,60 @@
+<div class="content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card" data-aos="fade-down">
+        <div class="card-header">
+          <h4 class="card-title">Total Users</h4>
+          <h1 class="card-title text-info">{{response.users}}</h1>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card" data-aos="fade-down">
+        <div class="card-header">
+          <h4 class="card-title">Total Vendors</h4>
+          <h1 class="card-title text-info">{{response.vendors}}</h1>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card" data-aos="fade-down">
+        <div class="card-header">
+          <h4 class="card-title">Total Orders</h4>
+          <h1 class="card-title text-info">{{response.orders}}</h1>
+        </div>
+        <div class="card-body mb-0">
+          <div class="chart-area">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center" data-aos="fade-right">
+    <div class="col-4-lg mr-5 mt-5">
+      <canvas id="barChart" width="400" height="400"></canvas>
+    </div>
+    <div class="col-6-lg ml-5 mt-5" >
+      <canvas id="donutChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+  <div class="row mt-3 d-flex justify-content-center" >
+    <div class="col-6-lg d-flex justify-content-center mr-5 mt-5">
+      <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <div class="col-6-lg ml-5 mt-5" >
+      <canvas id="polarChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,116 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title ml-3">Order Details</h4>
+                </div>
+                <div class="card-body ml-3 mb-5">
+                    <table>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Product Name: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2 ">{{result.cart.product.productname}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Description: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.product.description}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Price: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.product.price}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Category: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.product.category}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Stocks: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.product.stocks}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Order Quantity </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.quantity}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Total Price: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.productTotal}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Order Date </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.date}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Status: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.cart.product.status}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Customer Name: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.billingDetails.firstname}}
+                                    {{result.billingDetails.lastname}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Customer Email: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.billingDetails.email}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Delivery Address: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.addressDetail.addressLine}},
+                                    {{result.addressDetail.addressCity}}, {{result.addressDetail.addressZip}}</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="d-flex justify-content-center mt-5">
+                        <a href="/vendor/vendor-products" class="btn btn-primary"> Back </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

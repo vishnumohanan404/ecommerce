@@ -1,0 +1,57 @@
+<div class="content" style="padding-top: 10%;">
+    <div id="header">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-sm-12 col-md-12 hi" style="padding: 0% 5%;">
+                    <form action="/admin/admin-login" method="POST" id="login" role="form">
+                        <div class="login-head form-label col-md-12 d-flex justify-content-center pb-5">Sign In</div>
+
+                        <div class="mb-3 hi col-md-12 pb-2 row">
+                            {{#if errorMessage}}
+                            <p class="col">Invalid username or password</p>
+                            {{/if}}
+                        </div>
+                        <div class="mb-3 hi col-md-12 pb-2">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" name="admin_email" placeholder="admin@email.com">
+
+                        </div>
+                        <div class="mb-3 hi col-md-12 pb-2">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="password"
+                                placeholder="password">
+
+                        </div>
+                        <div class="row">
+                            {{#if loginErr}}<p class="error" style="color: red">Invalid username or password</p>{{/if}}
+                        </div>
+                        <div class="hi">
+                            <button type="submit" class="btn btn-primary btn-block col-12 ">Sign In</button>
+                            <div class="mt-3 hi" style="text-align: center;"> <a href="/admin/admin-signup">New Member?
+                                    Signup here.</a> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- validator --}}
+<script>
+    $(function () {
+        $("#login").validate({
+            rules: {
+                admin_email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                }
+            }
+        })
+    })
+</script>

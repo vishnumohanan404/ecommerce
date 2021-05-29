@@ -1,0 +1,96 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title ml-3">Product Details</h4>
+                </div>
+                <div class="card-body ml-3 mb-5">
+                    <table >
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Product Name: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2 ">{{result.productname}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Description: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.description}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Price: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.actualPrice}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Category: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.category}}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Stocks: </h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.stocks}}</label>
+                            </td>
+                        </tr>
+                        {{#if result.discount}}
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Offer Price:</h5>
+                            </td>
+                            <td>
+                                <label class="ml-5 pb-2">{{result.discountPrice}}</label>
+                            </td>
+                        </tr>
+                        {{/if}}
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Offer Percentage: </h5>
+                            </td>
+                            {{#if result.discount}}
+                            <td>
+                                <label class="ml-5 pb-2">{{result.offPercentage}}</label>
+                            </td>
+                            {{else}}
+                            <td>
+                                <label class="ml-5 pb-2">None</label>
+                            </td>
+                            {{/if}}
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 class="card-category">Images: </h5>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <img src="/product-images/{{result._id}}_image1.jpeg" alt="" height="200px" width="200px"
+                        class="mr-5">
+                    <img src="/product-images/{{result._id}}_image2.jpeg" alt="" height="200px" width="200px"
+                        class="mr-5">
+                    <img src="/product-images/{{result._id}}_image3.jpeg" alt="" height="200px" width="200px"
+                        class="mr-5">
+                    <div class="d-flex justify-content-center mt-5">
+                        <a href="/vendor/offers" class="btn btn-primary"> Back </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

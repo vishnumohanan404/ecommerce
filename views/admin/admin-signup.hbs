@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-6 m-auto">
+        <div class="container mt-5 pl-5">
+            <form action="/admin/admin-signup" method="POST" id="signup">
+                <h2 class="text-center">Create new account</h2>
+                <div class="form-group">
+                    {{#if errorMessage}}
+                    <p>User Already Exist</p>
+                    {{/if}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" name="name" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="text" class="form-control" name="email" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                        placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" class="form-control" name="cnfpassword" id="exampleInputPassword1"
+                        placeholder="Confirm Password">
+                </div>
+                <a href="/admin/admin-login">Already have an account?</a>
+                <button type="submit" class="btn btn-primary float-right">Signup</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{!-- jquery validation --}}
+
+<script>
+    $(function () {
+        $("#signup").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 5
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                cnfpassword: {
+                    equalTo: '#exampleInputPassword1'
+                }
+            }
+        })
+    })
+</script>

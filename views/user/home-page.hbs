@@ -1,0 +1,146 @@
+<!-- banner part start-->
+<section class="banner_part">
+    <div class="container" >
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="banner_slider owl-carousel" data-aos="fade-up">
+                    {{!-- slider 1 --}}
+                    <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>All your home ever wanted is here.</h1>
+                                        <p>Decorate your dream home from our collection of home decore</p>
+                                        <a href="/all-products" class="btn_2">Shop now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png"  alt="">
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- <div class="single_banner_slider">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8">
+                                <div class="banner_text">
+                                    <div class="banner_text_iner">
+                                        <h1>All your home ever wanted is here.</h1>
+                                        <p>Decorate your dream home from our collection of home decore</p>
+                                        <a href="#" class="btn_2">Shop now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="banner_img d-none d-lg-block">
+                                <img src="img/banner_img.png" alt="">
+                            </div>
+                        </div>
+                    </div> --}}
+                    {{!-- slider end --}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner part start-->
+
+<!-- feature_part start-->
+<section class="feature_part padding_top" data-aos="fade-up">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section_tittle text-center">
+                    <h2>Featured Category</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-5 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_3.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-7 col-sm-6">
+                <div class="single_feature_post_text">
+                    <p>Premium Quality</p>
+                    <h3>Latest foam Sofa</h3>
+                    <a href="#" class="feature_btn">EXPLORE NOW <i class="fas fa-play"></i></a>
+                    <img src="img/feature/feature_4.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- product_list start-->
+<section class="feature_part section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section_tittle text-center">
+                    <h2>Top Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {{!-- product carousal point--}}
+                <div class="single_product_list_slider" data-aos="fade-up">
+                    <div class="row align-items-center justify-content-between">
+                        {{#each products}}
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="single_product_item">
+                                <a href="/product-details/?id={{this._id}}">
+                                    <img src="product-images/{{this._id}}_image1.jpeg" alt="">
+                                </a>
+                                <div class="single_product_text ">
+                                    <h4>{{this.productname}}</h4>
+                                    {{#if this.discountPrice}}
+                                    <div class="d-inline-flex inline">
+                                    <h3 class="">Rs.<strike>{{this.actualPrice}}</strike>  {{this.discountPrice}}</h3> <img src="/img/discount.svg" alt="" class="ml-2" width="19px" height="19px"> 
+                                    </div>
+                                    {{else}}
+                                    <h3>Rs. {{this.actualPrice}}</h3>
+                                    {{/if}}
+                                    <div class="">
+                                        <button onclick="addToCart('{{this._id}}')" class="btn m-0 p-0 btn_4 add_cart">Add to cart <i
+                                                class=""></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product_list start-ends -->
+
+<!-- subscribe_area part start-->
+<section class="subscribe_area section_padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="subscribe_area_text text-center">
+                    <h5>Join Our Newsletter</h5>
+                    <h2>Subscribe to get Updated
+                        with new offers</h2>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="enter email address"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <a href="#" class="input-group-text btn_2" id="basic-addon2">subscribe now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--::subscribe_area part end::-->

@@ -1,0 +1,296 @@
+<style>
+  .imageInput {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .hello {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modal-lg {
+    max-width: 1000px !important;
+  }
+
+  .modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
+  .preview {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    overflow: hidden
+  }
+
+  .preview2 {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    overflow: hidden
+  }
+
+  .previewt {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    overflow: hidden
+  }
+</style>
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card pb-4">
+        <div class="container mt-5 pl-5">
+          <form action="/vendor/add-product" method="POST" id="addproduct" enctype="multipart/form-data">
+            <h2 class="text-center">Add Product</h2>
+            <div>
+              {{#if status}}
+              <p class="text-success">{{status}}</p>
+              {{/if}}
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Product Name</label>
+              <input type="text" class="form-control" name="productname" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Product Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Description</label>
+              <input type="text" class="form-control" name="description" id="description" aria-describedby="emailHelp"
+                placeholder="Description">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Price</label>
+              <input type="text" class="form-control" name="price" id="price" placeholder="Price">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Category</label>
+              <select id="cars" name="category" class="form-select  form-select-lg form-control   mr-2"
+                aria-placeholder="Category">
+                <option value="category" aria-placeholder="Category" aria-hidden="true" disabled selected hidden>Choose
+                  a category
+                </option>
+                {{#each result}}
+                <option value="{{this.categories}}" class="form-control mt-2" placeholder="Category">{{this.categories}}
+                </option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Stocks</label>
+              <input type="text" class="form-control" name="stocks" id="stocks" placeholder="Stocks">
+            </div>
+            <div class="form-group ">
+              <legend class="col-form-label pt-1 m-0 p-0">Images</legend>
+              {{!-- 1st image --}}
+              <div class="container pt-4">
+                <img alt="" class="" height="100" width="100" id="imageView">
+                <div class="file btn btn-primary hello ml-5">
+                  Browse
+                  {{!-- actual browse button --}}
+                  <input type="file" name="crop_image" class="imageInput" id="upload_image"
+                    accept="image/x-png,image/gif,image/jpeg" />
+                  {{!-- this input is used to send bae64 string to backend because we cannot set vale to input field of
+                  type file due to security reason--}}
+                  <input type="hidden" name="base64_image" class="" id="base64_image" value="">
+                  {{!-- vendor id passed for separating products according to their respectiva vendors --}}
+                  <input type="hidden" name="vendorid" class="" id="vendorid" value="{{vendor._id}}">
+                </div>
+                <button class="btn ml-3" onclick="" id="restore" hidden>Restore</button>
+              </div>
+              {{!-- 2nd image --}}
+              <div class="container pt-4">
+                <img alt="" class="" height="100" width="100" id="imageView2">
+                <div class="file btn btn-primary hello ml-5">
+                  Browse
+                  {{!-- actual browse button --}}
+                  <input type="file" name="crop_image2" class="imageInput" id="upload_image2"
+                    accept="image/x-png,image/gif,image/jpeg" />
+                  {{!-- this input is used to send bae64 string to backend because we cannot set vale to input field of
+                  type file due to security reason--}}
+                  <input type="hidden" name="base64_image2" class="" id="base64_image2" value="">
+                  {{!-- vendor id passed for separating products according to their respectiva vendors --}}
+                </div>
+                <button class="btn ml-3" onclick="" id="restore" hidden>Restore</button>
+              </div>
+              {{!-- 3rd image --}}
+              <div class="container pt-4">
+                <img alt="" class="" height="100" width="100" id="imageView3">
+                <div class="file btn btn-primary hello ml-5">
+                  Browse
+                  {{!-- actual browse button --}}
+                  <input type="file" name="crop_image" class="imageInput" id="upload_image3"
+                    accept="image/x-png,image/gif,image/jpeg" />
+                  {{!-- this input is used to send bae64 string to backend because we cannot set vale to input field of
+                  type file due to security reason--}}
+                  <input type="hidden" name="base64_image3" class="" id="base64_image3" value="">
+                </div>
+                <button class="btn ml-3" onclick="" id="restore" hidden>Restore</button>
+              </div>
+              {{!-- Modal 1--}}
+
+              <div class="modal fade" id="modal_crop" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Crop Image Before Upload</h5>
+                      <button type="button" class="close modal_close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="img-container">
+                        <div class="row">
+                          <div class="col-md-8" style="object-fit: contain">
+                            <img src="" style='height: 100%; width: 100%; object-fit: contain' class=""  id="sample_image" />
+                          </div>
+                          <div class="col-md-4 ">
+                            <h5 class="modal-title d-flex justify-content-center">Preview</h5>
+                            <div class="preview ml-5 border border-primary "></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="crop_and_upload" class="btn btn-primary">Crop</button>
+                      <button type="button" class="btn btn-secondary modal_close" data-dismiss="modal"
+                        id="close_modal">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- modal 2 --}}
+
+              <div class="modal fade" id="modal_crop2" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Crop Image Before Upload</h5>
+                      <button type="button" class="close modal_close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="img-container">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <img src="" id="sample_image2" />
+                          </div>
+                          <div class="col-md-4 ">
+                            <h5 class="modal-title d-flex justify-content-center">Preview</h5>
+                            <div class="preview2 ml-5 border border-primary "></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="crop_and_upload2" class="btn btn-primary">Crop</button>
+                      <button type="button" class="btn btn-secondary modal_close" data-dismiss="modal"
+                        id="">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- modal 3 --}}
+              <div class="modal fade" id="modal_crop3" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Crop Image Before Upload</h5>
+                      <button type="button" class="close modal_close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="img-container">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <img src="" id="sample_image3" />
+                          </div>
+                          <div class="col-md-4 ">
+                            <h5 class="modal-title d-flex justify-content-center">Preview</h5>
+                            <div class="previewt ml-5 border border-primary "></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="crop_and_upload3" class="btn btn-primary">Crop</button>
+                      <button type="button" class="btn btn-secondary modal_close" data-dismiss="modal"
+                        id="">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- modal end --}}
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a href="/vendor/vendor-products" class="btn btn-primary"> Back </a>
+        </div>
+        </form>
+      </div>
+      <div class="card-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{{!-- jquery validation --}}
+
+<script>
+  $(function () {
+    $("#addproduct").validate({
+      ignore: "",
+      rules: {
+        productname: {
+          required: true,
+          minlength: 5
+        },
+        description: {
+          required: true,
+          minlength: 5
+        },
+        price: {
+          required: true,
+          digits: true
+        },
+        category: {
+          required: true,
+        },
+        stocks: {
+          required: true,
+          digits: true
+        },
+        base64_image: {
+          required: true,
+        },
+        base64_image2: {
+          required: true,
+        },
+        base64_image3: {
+          required: true,
+        }
+      },
+      errorPlacement: function (error, element) {
+        error.insertAfter(element.parent());
+      }
+    })
+  })
+</script>

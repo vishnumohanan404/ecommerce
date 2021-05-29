@@ -1,0 +1,87 @@
+
+
+{{!-- signup form  --}}
+ <section class="login_part padding_top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12 col-md-6 d-flex justify-content-center">
+                    <div class="login_part_form">
+                        <div class="login_part_form_iner">
+                            <h3 class="d-flex justify-content-center">Signup !</h3>
+                            <form class="row contact_form" action="/signup" method="post" novalidate="novalidate" id="signup">
+                                <div class="col-md-12 form-group mt-10">
+							        {{#if errorMessage}}
+                                    <p>User Already Exist.</p>
+                                    {{/if}}
+						        </div>
+                                <div class="col-md-12 form-group mt-10">
+							        <input type="text" name="firstname" placeholder="First Name" class="single-input">
+						        </div>
+                                <div class="col-md-12 form-group mt-10">
+                                    <input type="text" name="lastname" placeholder="Last Name" class="single-input">
+                                </div>
+                                <div class="col-md-12 form-group mt-10">
+                                    <input type="text" name="email" placeholder="johndoe@email.com" class="single-input">
+                                </div>
+                                <div class="col-md-12 form-group mt-10">
+                                    <input type="password" name="password" placeholder="Password" class="single-input" id="password">
+                                </div>
+                                <div class="col-md-12 form-group mt-10">
+                                    <input type="password" name="cnfpassword" placeholder="Confirm Password" class="single-input">
+                                </div>
+                                <div class="col-md-12 form-group mt-10">
+                                    <input type="text" name="phone" placeholder="Phone number" class="single-input">
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="creat_account d-flex align-items-center">
+                                        <input type="checkbox" id="f-option" name="selector">
+                                        <label for="f-option">Remember me</label>
+                                    </div>
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Signup
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+    {{!-- scripts --}}
+<script>
+    $(function(){
+    $("#signup").validate({
+        rules:{
+            firstname:{
+                required:true,
+                minlength:5  
+            },
+            lastname:{
+                required:true,
+                minlength:5
+            },
+            email:{
+                required:true,
+                email:true
+
+            },
+            password:{
+                required:true,
+                minlength:5
+
+            },
+            cnfpassword:{
+                equalTo: "#password"
+
+            },
+            phone:{
+                required:true,
+                minlength:10 
+            }
+        }
+      });
+     })
+</script>
+    

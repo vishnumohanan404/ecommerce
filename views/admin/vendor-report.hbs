@@ -1,0 +1,74 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="display: inline-block;"> Vendors</h4>
+                    {{#if vendors}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="vendorPDF"
+                        style="display: inline-block;float:right;">Export PDF</button>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="vendorPDF"
+                        style="display: inline-block;float:right;" disabled>Export PDF</button>
+                    {{/if}}
+                    {{#if orders}}
+                    <a type="button" download="somedata.xls"
+                        onclick="return ExcellentExport.excel(this, 'vendorTable', 'Vendor Report')"
+                        style="display: inline-block;float:right;">
+                        <button class="btn btn-sm btn-success mr-3 mt-3">Export Excel</button> </a>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="orderPDF"
+                        style="display: inline-block;float:right;" disabled>Export Excel</button>
+                    {{/if}}
+                </div>
+                <div>
+                    <p></p>
+                </div>
+                <div class="card-body" id="vendorsTable">
+                    <div class="table-responsive">
+                        <table class="table" id="vendorTable">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th class="text-right">
+                                    No Of Products
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each vendors}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.name}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.email}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info">{{this.phone}}</p>
+                                    </td>
+                                    <td class="text-right" style="padding-right: 75px;">
+                                        <p class="text-info">{{this.noOfProducts}}</p>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

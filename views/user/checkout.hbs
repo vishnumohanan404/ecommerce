@@ -1,0 +1,345 @@
+<script type="text/javascript">
+
+  function applyAddress(addressLine, addressCity, addressZip) {
+    document.getElementById('add1').value = addressLine
+    document.getElementById('city').value = addressCity
+    document.getElementById('zip').value = addressZip
+  }
+
+  function removeAddress(addressId) {
+    alert(addressId)
+    $.ajax({
+      url: '/remove-address',
+      method: 'post',
+      data: { addressId: addressId },
+      success: () => {
+        alert('Address has been removed');
+        document.getElementById(addressId).remove();
+      }
+    })
+    return false
+  }
+</script>
+<section class="checkout_area padding_top">
+  <div class="container">
+    {{#if discount}}
+    <div class="cupon_area">
+      <div class="check_title pl-0">
+        <h2 class="">
+          Coupons are not available on products with discounts!
+        </h2>
+      </div>
+    </div>
+    {{else}}
+    <div class="cupon_area">
+      <div class="check_title">
+        <h2>
+          Have a coupon?
+        </h2>
+      </div>
+      <p id="couponValid" style="display: none;color:red;margin: 0 20px 20px 30px">Invalid Coupon Code</p>
+      <input type="text" placeholder="Enter coupon code" id="coupon"/>
+      <a class="tp_btn" href="" onclick="return couponApply()" id="couponbtn">Apply Coupon</a>
+    </div>
+    {{/if}}
+    <div class="billing_details">
+      <div class="row">
+        <div class="col-lg-8">
+          <h3 class="mb-0">Billing Details</h3>
+          <form class="row contact_form" id="checkout-form">
+            <div class="col-md-6 form-group p_star">
+              <input type="text" class="form-control" id="first" name="firstname" placeholder="First name" />
+            </div>
+            <div class="col-md-6 form-group p_star">
+              <input type="text" class="form-control" id="last" name="lastname" placeholder="Last name" />
+            </div>
+            <div class="col-md-6 form-group p_star">
+              <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" />
+            </div>
+            <div class="col-md-6 form-group p_star">
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
+            </div>
+            <h3 class="ml-3 mb-0 mt-4">Shipping Address</h3>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="add1" name="add1" placeholder="Address line 01" />
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="city" name="city" placeholder="Town/City" />
+            </div>
+            <div class="col-md-12 form-group">
+              <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" />
+            </div>
+            <div class="col-md-12 form-group">
+              <input type="checkbox" id="f-option3" name="saveAddress" />
+              <label for="f-option3">Save this address</label>
+            </div>
+            <div class="col-md-12 form-group">
+              <h3 class="ml-1 mb-0 mt-4">Select from a recent address</h3>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="row">
+                {{#each address}}
+                <div class="card mb-3 ml-3 p-3 mr-3  border-info  col-xs-12 col-sm-3" style="align-items: stretch"
+                  id="{{this._id}}">
+                  <div class="card-body p-1 d-flex flex-column">
+                    <h5 class="card-title text-info mt-1 mb-0">Address {{inc @index}} </h5>
+                    <p class=" text-info"><span style="color: black; font-size:12px">{{this.line}}</span></p>
+                    <p class=" text-info"><span style="color: black; font-size:12px">{{this.city}}</span></p>
+                    <p class=" text-info"><span style="color: black; font-size:12px">{{this.zip}}</span></p>
+                    <div class="mt-auto mb-1 ml-0">
+                      <button type="button" onclick="applyAddress('{{this.line}}','{{this.city}}','{{this.zip}}');"
+                        class="btn ml-0">Use </button>
+                      <button type="button" onclick="removeAddress('{{this._id}}')" class="btn"><span
+                          style="color: red;">Remove</span></button>
+                    </div>
+                  </div>
+                </div>
+                {{/each}}
+              </div>
+
+            </div>
+
+            <input type="hidden" name="subtotal" id="subtotal" value="{{subtotal}}">
+            <input type="submit" name="submitinput" id="checkout-form-submit" style="display: none;">
+            <input type="hidden" name="couponApplied" id="couponApplied" value="">
+            <input type="hidden" name="couponCode" id="couponCode" value="">
+          </form>
+        </div>
+
+
+        {{!-- your order card --}}
+        <div class="col-lg-4 ">
+          <div class="order_box">
+            <h2>Your Order</h2>
+            <table class="table" style="table-layout:fixed">
+              <thead>
+                <tr>
+                  <th class="text-left" style="width: 120px;">Product</td>
+                  <th>Quantity</td>
+                  <th class="text-right" style="width: 130px;">Total</td>
+                </tr>
+              </thead>
+              {{#each cart}}
+              <tbody>
+                <tr>
+                  <td>{{this.product.productname}}</td>
+                  <td>x{{this.quantity}}</td>
+                  <td class="text-right">Rs. <span style="color:red;">{{multiply this.product.price
+                      this.quantity}}</span></td>
+                </tr>
+              </tbody>
+              {{/each}}
+            </table>
+            <table class="table" style="table-layout:fixed">
+              <tbody>
+                <tr>
+                  <td class="" scope="row">Coupons:</td>
+                  <td class="text-right" id="couponlabel">None</td>
+                </tr>
+                <tr>
+                  <td class="">Subtotal:</td>
+                  <td class="text-right" id="subtotalValue" style="color:red;font-weight:bold">{{subtotal}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="payment_item">
+              <div class="radion_btn">
+                <input type="radio" class="message_pri" id="payment-cod" name="selector" value="cod" />
+                <label for="payment-cod">Cash on delivery</label>
+                <div class="check"></div>
+              </div>
+              <p>
+                Pay in cash to our delivery partner at the time of delivery. <br>
+                (We strongly recommend not to choose this due to the current pandemic situation.)
+              </p>
+            </div>
+            <div class="payment_item active">
+              <div class="radion_btn">
+                <input type="radio" class="message_pri" id="payment-razorpay" name="selector" value="rp" checked />
+                <label for="payment-razorpay">Razor Pay </label>
+                <img src="img/product/single-product/card.jpg" alt="" />
+                <div class="check"></div>
+              </div>
+              <p>
+                Page will be redirected to razorpay payment gateway
+              </p>
+            </div>
+            <div class="creat_account">
+              <input type="checkbox" id="agree" name="agree" value="agree" />
+              <label for="f-option4">I’ve read and accept the </label>
+              <a href="#">terms & conditions*</a>
+            </div>
+            <div class="d-flex justify-content-center">
+              <label for="checkout-form-submit" class="btn btn_3" role="button" tabindex="0">Proceed to pay</label>
+            </div>
+          </div>
+        </div>
+        {{!-- your order card end --}}
+
+        {{!-- address cards --}}
+        <div class="d-flex bd-highlight  m-3 ">
+          <div class="row" style="overflow: hidden; ">
+
+
+
+          </div>
+        </div>
+      </div>
+      {{!-- address card end --}}
+
+
+    </div>
+  </div>
+  </div>
+</section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  $(function () {
+    $("#checkout-form").validate({
+      rules: {
+        firstname: {
+          required: true,
+          minlength: 5
+        },
+        lastname: {
+          required: true,
+          minlength: 5
+        },
+        email: {
+          required: true,
+          email: true
+        },
+        number: {
+          required: true,
+          minlength: 10,
+          maxlength: 10
+        },
+        add1: {
+          required: true,
+          minlength: 10
+        },
+        city: {
+          required: true,
+          minlength: 5
+        },
+        zip: {
+          required: true,
+          minlength: 5
+        }
+      },
+      submitHandler: function () {
+        var form = $('#checkout-form')[0];
+        let dataform = new FormData(form)
+        let selector = $(".message_pri:checked").val();
+        dataform.append('selector', selector);
+        $.ajax({
+          url: '/checkout',
+          method: 'post',
+          data: dataform,
+          processData: false,
+          contentType: false,
+          success: (response) => {
+            if (response.codSuccess) {
+              location.href = '/order-success'
+            } else {
+              razorpayPayment(response);
+            }
+          }
+        })
+      }
+    });
+    return false
+  })
+
+  function razorpayPayment(order) {
+    alert(order.id)
+    var options = {
+      "key": "rzp_test_IKTD1Jw6ZMVbm7", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "möbel",
+      "description": "Test Transaction",
+      "image": "/img/logo-2.png",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+
+        console.log(response, "this is payment parameter")
+        verifyPayment(response, order)
+      },
+      "prefill": {
+        "name": order.username,
+        "email": order.email,
+        "contact": order.phone
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
+  function verifyPayment(payment, order) {
+    $.ajax({
+      url: '/verify-payment',
+      method: 'post',
+      data: {
+        payment,
+        order
+      },
+      success: (response) => {
+        if (response.status) {
+          location.href = '/order-success'
+        } else {
+          alert("payment failed")
+        }
+      }
+    })
+  }
+
+  function couponApply() {
+    let coupon = document.getElementById('coupon').value
+    let subtotal = document.getElementById('subtotalValue').innerHTML
+    alert(coupon)
+    $.ajax({
+      url: '/applycoupon',
+      data: { coupon: coupon },
+      method: 'get',
+      success: (response) => {
+        alert(response.status.checkCoupon.offer)
+        if (response.status) {
+          console.log(response.status.checkCoupon.couponType)
+          document.getElementById('coupon').value = ""
+          document.getElementById('couponlabel').innerHTML = response.status.checkCoupon.coupon
+          document.getElementById('coupon').disabled = true; 
+          document.getElementById('couponbtn').disabled = true; 
+          if (response.status.checkCoupon.couponType === "Welcome Coupon") {
+            document.getElementById('couponApplied').value = "WEL"
+            document.getElementById('couponCode').value = response.status.checkCoupon.coupon
+            document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - 200)
+          } else if (response.status.checkCoupon.couponType === "Admin Coupon") {
+            document.getElementById('couponApplied').value = "ADM"
+            document.getElementById('couponCode').value = response.status.checkCoupon.coupon
+            document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
+            document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
+            alert(document.getElementById('subtotalValue').innerHTML)
+          }else if (response.status.checkCoupon.couponType === "Festival Coupon") {
+            document.getElementById('couponApplied').value = "FST"
+            document.getElementById('couponCode').value = response.status.checkCoupon.coupon
+            document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
+            document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
+            alert(document.getElementById('subtotalValue').innerHTML)
+          } 
+        } else {
+          document.getElementById('couponValid').style.display = 'block'
+        }
+      }
+    })
+    return false
+  }
+
+</script>

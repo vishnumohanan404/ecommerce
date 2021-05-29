@@ -1,0 +1,66 @@
+<style>
+    .profile-pic {
+        border-radius: 50%;
+        height: 150px;
+        width: 150px;
+    }
+</style>
+<section class="confirmation_part padding_top">
+    <div class="container">
+        <div class="row">
+            <div class=" col-lx-4 col-lg-12 d-flex justify-content-center">
+                <div class="single_confirmation_details pl-0 pr-0">
+                    <div class="d-flex justify-content-center mb-5">
+                        <h3>Personal Details</h3>
+                    </div>
+                    {{#if profileEditStatus}}
+                    <div class="d-flex justify-content-center mb-5">
+                        <p>{{profileEditStatus}}</p>
+                    </div>
+                    {{/if}}
+                    {{#if imageExist}}
+                    <div class="d-flex justify-content-center mb-5">
+                        <img class="profile-pic" src="/profile-pictures/{{user._id}}.jpeg"> </img>
+                    </div>
+                    {{else}}
+                    <div class="d-flex justify-content-center mb-5">
+                        <img class="profile-pic" src="/profile-pictures/dummy.png"> </img>
+                    </div>
+                    {{/if}}
+                    <table style="border-spacing:200px 10px ;border-collapse: separate;table-layout:fixed;margin:0"
+                        class="d-flex justify-content-center">
+                        <tr>
+                            <td>First name:</td>
+                            <td class="text-right">{{userDetails.firstname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Last name:</td>
+                            <td class="text-right">{{userDetails.lastname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td class="text-right">{{userDetails.email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone:</td>
+                            <td class="text-right">{{userDetails.phone}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-right "><a href="/manage-address">Manage Address</a></td>
+                        </tr>
+                    </table>
+                    <div class="d-flex justify-content-center mb-5 mt-5">
+
+
+                    </div>
+                    <div class="d-flex justify-content-center mb-5 mt-5">
+                        <a href="/edit-profile"><button class="btn_3">Edit</button></a>
+                        <a class="btn_3 ml-5" href="/">Back</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

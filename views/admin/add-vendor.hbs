@@ -1,0 +1,71 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title pl-3"> Add New Vendor</h4>
+                </div>
+                <div class="card-body ">
+
+                    {{#if status}}
+                    <p class="pl-3">{{status}}</p>
+                    {{/if}}
+                    <form action="/admin/add-vendor" method="POST" id="addvendor">
+                        <div class="form-group  ">
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="name" placeholder="Name"
+                                    class="single-input form-control">
+                            </div>
+                            
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="text" name="email" placeholder="johndoe@email.com"
+                                    class="single-input form-control">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="password" name="password" placeholder="Password"
+                                    class="single-input form-control" id="password">
+                            </div>
+                            <div class="col-md-12 form-group mt-10">
+                                <input type="password" name="cnfpassword" placeholder="Confirm Password"
+                                    class="single-input form-control">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center pt-3 pb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="/admin/vendors" class="btn btn-primary"> Back </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{!-- jquery validation --}}
+
+<script>
+    $(function () {
+        $("#addvendor").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 5
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                cnfpassword: {
+                    required:true,
+                    equalTo: '#password'
+                }
+            }
+        })
+    })
+</script>

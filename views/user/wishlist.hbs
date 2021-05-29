@@ -1,0 +1,89 @@
+<!--================Home Banner Area =================-->
+<!-- breadcrumb start-->
+<section class="breadcrumb ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="breadcrumb_iner">
+          <div class="breadcrumb_iner_item">
+            <h2>Wishlist</h2>
+            <p>Home <span>-</span>Wishlist</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Cart Area =================-->
+<section class="cart_area padding_top">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        {{#if wishlist}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Offers</th>
+              <th scope="col" style="text-align: center;">Remove</th>
+              <th scope="col" class="d-flex justify-content-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each wishlist}}
+            <tr>
+              <td>{{inc @index}}</td>
+              <td style="width: fit-content;">
+                <div class="media">
+                  <div class="d-flex ">
+                    <img src="product-images/{{this.wishlist._id}}_image1.jpeg" alt="" height="100px" width="100px"
+                      class="" />
+                  </div>
+                  <div class="media-body">
+                    <p>{{this.wishlistt.productname}}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5>{{this.wishlist.productname}}</h5>
+              </td>
+              <td>
+                <h5>Rs.<span>{{this.wishlist.actualPrice}}</span></h5>
+              </td>
+              <td>{{#if this.wishlist.discount}}- {{subtract this.wishlist.actualPrice this.wishlist.price}}{{else}}No
+                Offers{{/if}}</td>
+              <td style="text-align: center;">
+                <button class="btn btn_4 m-0" onclick="removeWishlistItem('{{this.wishlist._id}}')"> Delete</button>
+              </td>
+              <td style="text-align: center;">
+                <button class="btn btn_4 m-0" onclick="moveToCart('{{this.wishlist._id}}')"> Move to cart</button>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        {{else}}
+        <div class="container pb-5">
+          <div class="cart_inner ">
+            <div class="breadcrumb_iner_item pb-5" style="justify-content: center;">
+
+              <div class="d-flex justify-content-center">
+                <h2 class="">Your wishlist is empty.</h2>
+              </div>
+
+            </div>
+        </div>
+        {{/if}}
+        <div class="checkout_btn_inner float-right">
+          <a class="btn_1" href="/all-products">Continue Shopping</a>
+          <a class="btn_1 checkout_btn_1" href="/cart">Proceed to cart</a>
+        </div>
+      </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->

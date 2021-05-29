@@ -1,0 +1,77 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="display: inline-block;"> Products</h4>
+                    {{#if products}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="productsPDF"
+                        style="display: inline-block;float:right;">Export PDF</button>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="productsPDF"
+                        style="display: inline-block;float:right;" disabled>Export PDF</button>
+                    {{/if}}
+                </div>
+                <div>
+                    <p></p>
+                </div>
+                <div class="card-body" id="vendorsTable">
+                    <div class="table-responsive">
+                        <table class="table" id="productsTable">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Offer
+                                </th>
+                                <th class="text-right">
+                                    Stock
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each products}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.productname}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.description}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info">{{this.price}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info">{{this.category}}</p>
+                                    </td>
+                                    <td class="pl-4">
+                                        <p class="m-0 text-info">{{this.offPercentage}} %</p>
+                                    </td>
+                                    <td class="text-right" style="">
+                                        <p class="text-info">{{this.stocks}}</p>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

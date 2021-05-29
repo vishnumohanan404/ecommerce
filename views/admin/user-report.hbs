@@ -1,0 +1,74 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="display: inline-block;"> Users</h4>
+                    {{#if users}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="jsPDF"
+                        style="display: inline-block;float:right;">Export PDF</button>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-warning mt-3" id="jsPDF"
+                        style="display: inline-block;float:right;" disabled>Export PDF</button>
+                    {{/if}}
+                    {{#if users}}
+                    <a type="button" download="somedata.xls"
+                        onclick="return ExcellentExport.excel(this, 'styledTable', 'User Report')"
+                        style="display: inline-block;float:right;">
+                        <button class="btn btn-sm btn-success mr-3 mt-3">Export Excel</button> </a>
+                    {{else}}
+                    <button type="button" class="btn btn-sm btn-success mr-3 mt-3" id="jsExcel"
+                        style="display: inline-block;float:right;" disabled>Export Excel</button>
+                    {{/if}}
+                </div>
+                <div>
+                    <p></p>
+                </div>
+                <div class="card-body" id="customersTable">
+                    <div class="table-responsive">
+                        <table class="table" id="styledTable">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th class="d-flex justify-content-center">
+                                    Orders
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each users}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.firstname}} {{this.lastname}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="m-0 text-info ">{{this.email}}</p>
+                                    </td>
+                                    <td>
+                                        <p class=" text-info">{{this.phone}}</p>
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        <p class=" text-info">{{this.numberOfOrders}}</p>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

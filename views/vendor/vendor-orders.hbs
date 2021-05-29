@@ -1,0 +1,195 @@
+<style>
+    @media (max-width: 500px) {
+        .dropdown-menu {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    }
+</style>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" data-aos="fade-up">
+                <div class="card-header">
+                    <h4 class="card-title"> Orders</h4>
+                </div>
+                <div>
+                    <p></p>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Order details
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    View
+
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th class="d-flex justify-content-center">
+                                    Manage
+                                </th>
+                            </thead>
+                            <tbody>
+                                {{#each orders}}
+                                <tr>
+                                    <td>
+                                        {{inc @index}}
+                                    </td>
+                                    <td>
+                                        <img src="/product-images/{{this.cart.product._id}}_image1.jpeg" alt="thumbnail"
+                                            height="80px" width="80px">
+                                    </td>
+
+                                    <td>
+                                        <p class="m-0 text-info "><span class="mr-2"
+                                                style="color: black; font-size:12px">Product
+                                                Name:</span> {{this.cart.product.productname}}</p>
+                                        <p class="m-0 text-info "><span class="mr-0"
+                                                style="color: black; font-size:12px">Product
+                                                Quantity:</span> {{this.cart.quantity}}</p>
+                                        <p class=" text-info"><span class="mr-4"
+                                                style="color: black; font-size:12px">Billing Name:</span>
+                                            {{this.billingDetails.firstname}}</p>
+                                    </td>
+                                    <td>
+                                        Rs.{{this.cart.productTotal}}
+                                    </td>
+                                    <td>
+                                        <a href="/vendor/view-order-details/{{this._id}}/{{this.cart.product._id}}" class="btn btn-outline-success">View</a>
+                                    </td>
+                                    <td>
+                                        {{#if this.cart.product.status}}
+                                        <p class="m-0 text-info" id="shipped">{{this.cart.product.status}}</p>
+                                        {{else}}
+                                        <p class="m-0 text-info" id="shipped">{{this.orderStatus}}</p>
+                                        {{/if}}
+                                    </td>
+                                    {{!-- <td class="text-right">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-outline-success dropdown-toggle"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-truck mr-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right   ">
+                                                <h6 class="dropdown-header">Action</h6>
+                                                <a class="dropdown-item disabled">Placed</a>
+                                                {{#if this.cart.product.shipped}}
+                                                <button class="dropdown-item" id="delivered"
+                                                    onclick="deliver('{{this.cart.product._id}}','{{this.userId}}','{{this._id}}')">Delivered</button>
+                                                {{else}}
+                                                {{#if this.cart.product.delivered}}
+                                                <button class="dropdown-item" id="delivered"
+                                                    onclick="completed('{{this.cart.product._id}}','{{this.userId}}','{{this._id}}')">Completed</button>
+                                                {{else}}
+                                                <button class="dropdown-item "
+                                                    onclick="ship('{{this.cart.product._id}}','{{this.userId}}','{{this._id}}')">Shipped</button>
+                                                {{/if}}
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </td> --}}
+                                    <td class="text-right">
+                                        {{#if this.cancel}}
+                                        <i class="fas fa-ban d-flex justify-content-center"></i>
+                                        {{else}}
+                                        {{#if this.cart.product.shipped}}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-outline-success dropdown-toggle"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-truck mr-2"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right   ">
+                                                <h6 class="dropdown-header">Action</h6>
+                                                <button class="dropdown-item" id="delivered"
+                                                    onclick="deliver('{{this.cart.product._id}}','{{this.userId}}','{{this._id}}','{{this.cart.quantity}}')">Delivered
+                                                </button>
+                                                {{else}}
+                                                {{#if this.cart.product.delivered}}
+                                                <i class="fas fa-check d-flex justify-content-center"></i>
+                                                {{else}}
+                                                <div class="dropdown">
+                                                    <button type="button"
+                                                        class="btn btn-outline-success dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-truck mr-2"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right   ">
+                                                        <h6 class="dropdown-header">Action</h6>
+                                                        <button class="dropdown-item "
+                                                            onclick="ship('{{this.cart.product._id}}','{{this.userId}}','{{this._id}}')">Shipped</button>
+
+                                                    </div>
+                                                </div>
+                                                {{/if}}
+                                                {{/if}}
+                                        {{/if}}        
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ship(productId, userId, orderId) {
+        $.ajax({
+            url: '/vendor/ship-product/',
+            method: 'post',
+            data: {
+                productId,
+                userId,
+                orderId
+            },
+            success: (response) => {
+                if (response.shipped) {
+
+                    location.reload(true)
+                    document.getElementById('status').innerHTML = "Shipped"
+                }
+            }
+        })
+        return false
+    }
+
+    function deliver(productId, userId, orderId,quantity) {
+        $.ajax({
+            url: '/vendor/deliver-product/',
+            method: 'post',
+            data: {
+                productId,
+                userId,
+                orderId,
+                quantity
+            },
+            success: (response) => {
+                if (response.delivered) {
+
+                    location.reload(true)
+                }
+            }
+        })
+        return false
+    }
+
+</script>
