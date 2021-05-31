@@ -1,4 +1,4 @@
-# Project Title
+# möbel
 
 This is a complete beginner's project, so any kind of contributions and bug fixes are welcome.
 
@@ -40,8 +40,7 @@ npm start
 
 
 ## Authors
-
-Contributors names and contact info
+Vishnu Mohan
 
 
 ## Version History
@@ -56,7 +55,5 @@ This project is licensed under the Vishnu Mohan License
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+* [StackOverFlow](https://stackoverflow.com/)
+* [GitHub](https://github.com/)
