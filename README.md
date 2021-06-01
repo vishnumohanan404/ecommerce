@@ -34,6 +34,7 @@ npm start
 * Common mistakes
 * Best Practices
 * Logical Fixes
+* Replacing unwanted async/await
 * Or anything worth your time 😄
 
 
