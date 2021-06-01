@@ -67,7 +67,7 @@ module.exports={
                     productname:    body.productname,
                     description:    body.description,
                     price:          body.price,
-                    stock:          body.stock,
+                    stocks:         body.stocks,
                     category:       body.category,
                     actualPrice:    body.price
                 }
