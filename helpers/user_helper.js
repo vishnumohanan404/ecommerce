@@ -113,10 +113,10 @@ module.exports={
         })
     },
 
-    addToCart: (productId, userId)=>{
+    addToCart: (productId, userId, count)=>{
         return new Promise(async (resolve,reject)=>{
             let productObject = {
-                item: ObjectId(productId), quantity:1
+                item: ObjectId(productId), quantity:count
                }
             let userCart = await db.get().collection(collections.CART_COLLECTION).findOne({user:ObjectId(userId)})
             if(userCart){
@@ -130,7 +130,7 @@ module.exports={
                     },
                     {
                         $inc:{
-                            'products.$.quantity':1
+                            'products.$.quantity':count
                         }
                     }).then(()=>{
                         resolve()

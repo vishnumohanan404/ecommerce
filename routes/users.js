@@ -306,10 +306,12 @@ router.get('/cart',productsLists,categoriesGet,verifyLogin,(req,res)=>{
 
 
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
-  console.log(req.params.id +"params is a good boy");
+  
   let id    = req.params.id
   let userId  = req.session.user._id
-      userHelper.addToCart(id,userId).then(()=>{
+  let count   = parseInt(req.query.count)
+  console.log(req.params,req.query,"params is a good boy");
+      userHelper.addToCart(id,userId,count).then(()=>{
         res.json({status:true})
       })
 })

@@ -1,13 +1,18 @@
 function addToCart(productId) {
+  let count = document.getElementById("quantity").value
+  alert(count)
   $.ajax({
     url: "/add-to-cart/" + productId,
     method: "get",
+    data: {productId:productId,count:count},
     success: (response) => {
       if (!response.status) {
         console.log("login");
+        document.getElementById("quantity").value=1
         window.location.href = "/login";
       } else {
         console.log(status);
+        document.getElementById("quantity").value=1
         let count = $("#cart-count").html();
         count = parseInt(count) + 1;
         $("#cart-count").html(count);
