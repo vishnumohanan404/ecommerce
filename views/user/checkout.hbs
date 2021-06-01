@@ -171,7 +171,7 @@
               <a href="#">terms & conditions*</a>
             </div>
             <div class="d-flex justify-content-center">
-              <label for="checkout-form-submit" class="btn btn_3" role="button" tabindex="0">Proceed to pay</label>
+              <label for="checkout-form-submit" class="btn btn_3" role="button" tabindex="0" id="btnSubmit">Proceed to pay</label>
             </div>
           </div>
         </div>
@@ -229,6 +229,7 @@
         }
       },
       submitHandler: function () {
+        $("#checkout-form-submit").attr("disabled", true);
         var form = $('#checkout-form')[0];
         let dataform = new FormData(form)
         let selector = $(".message_pri:checked").val();
@@ -244,6 +245,7 @@
               location.href = '/order-success'
             } else {
               razorpayPayment(response);
+              $("#checkout-form-submit").attr("disabled", false);
             }
           }
         })
