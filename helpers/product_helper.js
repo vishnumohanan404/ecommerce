@@ -67,7 +67,7 @@ module.exports={
                     productname:    body.productname,
                     description:    body.description,
                     price:          body.price,
-                    stocks:         body.stocks,
+                    stocks:         parseInt(body.stocks),
                     category:       body.category,
                     actualPrice:    body.price
                 }

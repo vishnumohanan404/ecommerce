@@ -423,7 +423,13 @@ module.exports={
             email: email,
             phone : mobile
         }
-        user.coupons        = [{coupon:random.getRandom(3,'WEL','','front'),couponType:'WEL',couponDesc  : "Rs.200 Off"}]
+        user.coupons        = [{
+            coupon:random.getRandom(3,'WEL','','front'),
+            couponType:'Welcome Coupon',
+            couponDesc  : "Rs.200 Off",
+            offer  : 200,
+            status : true
+        }]
         return new Promise( async (resolve,reject)=>{
             await db.get().collection(collections.USER_COLLECTION).insertOne(user).then((response)=>{
                 response.user   = user;
@@ -432,7 +438,9 @@ module.exports={
                     coupon      : response.ops[0].coupons[0].coupon,
                     user        : response.ops[0]._id,
                     couponType  : response.ops[0].coupons[0].couponType,
-                    couponDesc  : "Rs.200 Off"
+                    couponDesc  : "Rs.200 Off",
+                    offer       : response.ops[0].coupons[0].offer,
+                    status      : true
                 }
                 db.get().collection(collections.COUPON_COLLECTION).insertOne(coupon).then(()=>{
                     resolve(response)
