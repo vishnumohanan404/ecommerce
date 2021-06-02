@@ -110,7 +110,7 @@
                         if (response.status) {
                             console.log("ajax");
                             console.log(response.status, response.email, response.mobile);
-                            $("#otp-register").replaceWith(`<form class="row contact_form" id="otp-register-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" type="text" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> </div> </div> <br>  <button type="submit" value="submit" id="" class="btn_3 d-flex justify-content-center"> Verify </button> <input type="email" id="emailhidden" name="user_emailhidden" value="" hidden> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
+                            $("#otp-register").replaceWith(`<form class="row contact_form" id="otp-register-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" name="otpinput" type="password" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> </div> </div> <br>  <button type="submit" value="submit" id="verifybutton" class="btn_3 d-flex justify-content-center"> Verify </button> <input type="email" id="emailhidden" name="user_emailhidden" value="" hidden> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
                             document.getElementById('emailhidden').value = response.email
                             document.getElementById('mobilehidden').value = response.mobile
                             $("#resend-otp").show()
@@ -121,27 +121,45 @@
                         }
                         //2nd ajax on the same page after the success of first, this one is for the submit of verify button
                         $(document).ready(function () {
-                            $('#otp-register-submit').submit((e) => {
-                                e.preventDefault()
-                                let mobile = $('#mobilehidden').val()
-                                let email = $('#emailhidden').val()
-                                let otp = $('#partitioned').val()
-                                $('#otp-incorrect').hide()
-                                $.ajax({
-                                    url: '/otp-register-submit',
-                                    method: 'post',
-                                    data: {
-                                        otp, mobile, email
-                                    },
-                                    success: (response) => {
-                                        if (response.status) {
-                                            window.location.href = '/'
-                                        } else {
-                                            $('#otp-incorrect').show()
-                                        }
+                            $("#otp-register-submit").validate({
+                                rules: {
+                                    otpinput: {
+                                        required: true,
+                                        digits: true,
+                                        minlength: 6,
+                                        maxlength: 6
                                     }
-                                })
-
+                                },
+                                submitHandler: function (e){
+                                    alert("slow")
+                                    
+                                    let mobile = $('#mobilehidden').val()
+                                    let email = $('#emailhidden').val()
+                                    let otp = $('#partitioned').val()
+                                    
+                                    $('#otp-incorrect').hide()
+                                    $('#verifybutton').attr("disabled", true);
+                                    $.ajax({
+                                        url: '/otp-register-submit',
+                                        method: 'post',
+                                        data: {
+                                            otp, mobile, email
+                                        },
+                                        success: (response) => {
+                                            if (response.status) {
+                                                window.location.href = '/'
+                                            } else {
+                                                $('#otp-incorrect').show()
+                                            }
+                                        },
+                                        complete: function () {
+                                            //Ajax request is finished, so we can enable
+                                            //the button again.
+                                            $('#verifybutton').attr("disabled", false);
+                                        }
+                                    })
+                                    return false
+                                }
                             })
 
                         })
@@ -150,7 +168,7 @@
                 })
                 return false;
             }
-            
+
         })
     })
 
