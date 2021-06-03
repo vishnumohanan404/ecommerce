@@ -38,7 +38,7 @@
         </h2>
       </div>
       <p id="couponValid" style="display: none;color:red;margin: 0 20px 20px 30px">Invalid Coupon Code</p>
-      <input type="text" placeholder="Enter coupon code" id="coupon"/>
+      <input type="text" placeholder="Enter coupon code" id="coupon" />
       <a class="tp_btn" href="" onclick="return couponApply()" id="couponbtn">Apply Coupon</a>
     </div>
     {{/if}}
@@ -157,12 +157,23 @@
             <div class="payment_item active">
               <div class="radion_btn">
                 <input type="radio" class="message_pri" id="payment-razorpay" name="selector" value="rp" checked />
-                <label for="payment-razorpay">Razor Pay </label>
+                <label for="payment-razorpay">Razorpay </label>
                 <img src="img/product/single-product/card.jpg" alt="" />
                 <div class="check"></div>
               </div>
               <p>
                 Page will be redirected to razorpay payment gateway
+              </p>
+            </div>
+            <div class="payment_item active">
+              <div class="radion_btn">
+                <input type="radio" class="message_pri" id="payment-paypal" name="selector" value="pp" checked />
+                <label for="payment-paypal">Paypal </label>
+                <img src="img/product/single-product/card.jpg" alt="" />
+                <div class="check"></div>
+              </div>
+              <p>
+                Page will be redirected to Paypal payment gateway
               </p>
             </div>
             <div class="creat_account">
@@ -171,7 +182,8 @@
               <a href="#">terms & conditions*</a>
             </div>
             <div class="d-flex justify-content-center">
-              <label for="checkout-form-submit" class="btn btn_3" role="button" tabindex="0" id="btnSubmit">Proceed to pay</label>
+              <label for="checkout-form-submit" class="btn btn_3" role="button" tabindex="0" id="btnSubmit">Proceed to
+                pay</label>
             </div>
           </div>
         </div>
@@ -193,8 +205,22 @@
   </div>
   </div>
 </section>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+  //scroll nav-bar color
+  $(function () {
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+      if (scroll > 60) {
+        $(".navbar").css("background", "white");
+      }
+      else {
+        $(".navbar").css("background", "transparent");
+      }
+    })
+  })
+
   $(function () {
     $("#checkout-form").validate({
       rules: {
@@ -317,8 +343,8 @@
           console.log(response.status.checkCoupon.couponType)
           document.getElementById('coupon').value = ""
           document.getElementById('couponlabel').innerHTML = response.status.checkCoupon.coupon
-          document.getElementById('coupon').disabled = true; 
-          document.getElementById('couponbtn').disabled = true; 
+          document.getElementById('coupon').disabled = true;
+          document.getElementById('couponbtn').disabled = true;
           if (response.status.checkCoupon.couponType === "Welcome Coupon") {
             document.getElementById('couponApplied').value = "WEL"
             document.getElementById('couponCode').value = response.status.checkCoupon.coupon
@@ -329,13 +355,13 @@
             document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
             document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
             alert(document.getElementById('subtotalValue').innerHTML)
-          }else if (response.status.checkCoupon.couponType === "Festival Coupon") {
+          } else if (response.status.checkCoupon.couponType === "Festival Coupon") {
             document.getElementById('couponApplied').value = "FST"
             document.getElementById('couponCode').value = response.status.checkCoupon.coupon
             document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
             document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
             alert(document.getElementById('subtotalValue').innerHTML)
-          } 
+          }
         } else {
           document.getElementById('couponValid').style.display = 'block'
         }

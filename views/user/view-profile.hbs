@@ -64,3 +64,16 @@
         </div>
     </div>
 </section>
+<script>
+    $(function () {
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+      if (scroll > 60) {
+        $(".navbar").css("background", "white");
+      }
+      else {
+        $(".navbar").css("background", "transparent");
+      }
+    })
+  })
+</script>

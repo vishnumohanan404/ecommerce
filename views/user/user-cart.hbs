@@ -117,5 +117,15 @@
 <!--================End Cart Area =================-->
 
 <script>
-
+$(function () {
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+      if (scroll > 500) {
+        $(".navbar").css("background", "white");
+      }
+      else {
+        $(".navbar").css("background", "transparent");
+      }
+    })
+  })
 </script>

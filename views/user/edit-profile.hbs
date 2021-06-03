@@ -79,15 +79,16 @@
                                     <span><i class="fas fa-user-plus" title="Add a profile picture"></i> </span>
                                 </div>
                                 {{/if}}
-                                
+
                             </label>
-                            
+
                             <input type="File" name="fileToUpload" id="fileToUpload" accept="image/*">
                             <input type="hidden" name="base64_image" id="base64_image" value="{{imageB64}}">
                         </div>
                         {{#if imageExist}}
                         <div class="d-flex justify-content-center mb-5">
-                            <button class="btn"  title="Remove Profile Picture" type="button" onclick="removeProfilePicture('{{user._id}}')"><i class="fas fa-trash-alt"></i></button>
+                            <button class="btn" title="Remove Profile Picture" type="button"
+                                onclick="removeProfilePicture('{{user._id}}')"><i class="fas fa-trash-alt"></i></button>
                         </div>
                         {{/if}}
                         {{!-- modal --}}
@@ -244,19 +245,30 @@
         });
     });
 
-    function removeProfilePicture(id){
+    function removeProfilePicture(id) {
         alert('hello')
         $.ajax({
-            url:    '/delete-profile-picture',
-            data:   {id},
+            url: '/delete-profile-picture',
+            data: { id },
             method: 'post',
-            success: (response)=>{
-                document.getElementById('base64_image').value=""
+            success: (response) => {
+                document.getElementById('base64_image').value = ""
                 location.reload()
-                
+
             }
-        
+
         })
     }
+    $(function () {
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+            if (scroll > 60) {
+                $(".navbar").css("background", "white");
+            }
+            else {
+                $(".navbar").css("background", "transparent");
+            }
+        })
+    })
 
 </script>

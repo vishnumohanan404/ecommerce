@@ -52,7 +52,8 @@
                             <div class="col-md-12 form-group p_star">
                                 <input type="tel" class="form-control" id="mobile" name="mobile" value=""
                                     placeholder="10-digit mobile number">
-                                <p style="color: red; display: none;" id="error">Number not register with any account</p>
+                                <p style="color: red; display: none;" id="error">Number not register with any account
+                                </p>
                             </div>
                             <div class="col-md-12 form-group">
                                 {{!-- <div class="creat_account d-flex align-items-center">
@@ -86,56 +87,68 @@
             },
 
             submitHandler: function () {
-                    $('#error').hide()
-                    $("#resend-otp").hide()
-                    let mobile = $('#mobile').val()
-                    $.ajax({
-                        url: '/verify-otp-login',
-                        method: 'post',
-                        data: {
-                            mobile
-                        },
-                        async: false,
-                        success: (response) => {
-                            if (response.status) {
-                                console.log(response.status, response.mobile);
-                                $("#otp-login").replaceWith(`<form class="row contact_form" id="otp-login-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" type="text" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> <p style="color: red; display: none;" id="otp-incorrect">Incorrect OTP</p> </div> </div>  <div class="col-md-12 form-group"> <button type="submit" value="submit" id="" class="btn_3  justify-content-center"> Verify </button> </div> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
-                                document.getElementById('mobilehidden').value = response.mobile
-                                $("#resend-otp").show()
-                            } else {
-                                $('#error').show()
-                            }
-                            //2nd ajax on the same page after the success of first, this one is for the submit of verify button
-                            $(document).ready(function () {
-                                $('#otp-login-submit').submit((e) => {
-                                    e.preventDefault()
-                                    let mobile = $('#mobilehidden').val()
-                                    let otp = $('#partitioned').val()
-                                    $('#otp-incorrect').hide()
-                                    $.ajax({
-                                        url: '/otp-login-submit',
-                                        method: 'post',
-                                        data: {
-                                            otp, mobile
-                                        },
-                                        success: (response) => {
-                                            if (response.status) {
-                                                window.location.href = '/'
-                                            } else {
-                                                $('#otp-incorrect').show()
-                                            }
+                $('#error').hide()
+                $("#resend-otp").hide()
+                let mobile = $('#mobile').val()
+                $.ajax({
+                    url: '/verify-otp-login',
+                    method: 'post',
+                    data: {
+                        mobile
+                    },
+                    async: false,
+                    success: (response) => {
+                        if (response.status) {
+                            console.log(response.status, response.mobile);
+                            $("#otp-login").replaceWith(`<form class="row contact_form" id="otp-login-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" type="text" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> <p style="color: red; display: none;" id="otp-incorrect">Incorrect OTP</p> </div> </div>  <div class="col-md-12 form-group"> <button type="submit" value="submit" id="" class="btn_3  justify-content-center"> Verify </button> </div> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
+                            document.getElementById('mobilehidden').value = response.mobile
+                            $("#resend-otp").show()
+                        } else {
+                            $('#error').show()
+                        }
+                        //2nd ajax on the same page after the success of first, this one is for the submit of verify button
+                        $(document).ready(function () {
+                            $('#otp-login-submit').submit((e) => {
+                                e.preventDefault()
+                                let mobile = $('#mobilehidden').val()
+                                let otp = $('#partitioned').val()
+                                $('#otp-incorrect').hide()
+                                $.ajax({
+                                    url: '/otp-login-submit',
+                                    method: 'post',
+                                    data: {
+                                        otp, mobile
+                                    },
+                                    success: (response) => {
+                                        if (response.status) {
+                                            window.location.href = '/'
+                                        } else {
+                                            $('#otp-incorrect').show()
                                         }
-                                    })
-
+                                    }
                                 })
 
                             })
-                            //2nd ajax finish
-                        }
-                    })
 
-              
+                        })
+                        //2nd ajax finish
+                    }
+                })
+
+
                 return false;
+            }
+        })
+    })
+    //navbar
+    $(function () {
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+            if (scroll > 60) {
+                $(".navbar").css("background", "white");
+            }
+            else {
+                $(".navbar").css("background", "transparent");
             }
         })
     })

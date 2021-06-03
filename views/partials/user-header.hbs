@@ -92,20 +92,28 @@
 
     @media screen and (max-width: 600px) {
         .wrapper {
-            display:none ;
+            display: none;
         }
-        .navbar-toggler{
-            padding-top:35px ;
+
+        .navbar-toggler {
+            padding-top: 35px;
         }
     }
-    
+
+    .position-fixed {
+        width: 1140px;
+    }
+
+    .navbar {
+        padding: 0px 10px
+    }
 </style>
 {{!-- --}}
 <header class="main_menu home_menu">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg navbar-light">
+                <nav class="navbar position-fixed navbar-expand-lg navbar-light " style="padding: 0 10px;">
                     <a class="navbar-brand" href="/"> <img src="/img/logo-2.png" alt="logo"> </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -183,7 +191,7 @@
                         {{!-- <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a> --}}
                         <div class="wrapper">
                             <a href="/profile" class=""><i class="far fa-user"></i></a>
-                            <a href="/wishlist"><i class="ti-heart"></i></a>
+                            <a href="/wishlist"><i class="fas fa-heart"></i></a>
 
                             <a href="/cart" id="navbarDropdown3">
                                 <i class="fas fa-cart-plus"></i>
@@ -218,6 +226,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
+    
     // getting all required elements
     const searchWrapper = document.querySelector(".search-input");
     const inputBox = searchWrapper.querySelector("input");

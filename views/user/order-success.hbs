@@ -1,106 +1,120 @@
-  <!--================ confirmation part start =================-->
-  <section class="confirmation_part padding_top">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="confirmation_tittle">
-            <span>Thank you. Your order has been received.</span>
-          </div>
-        </div>
-        <div class="col-lg-6 col-lx-4">
-          <div class="single_confirmation_details">
-            <h4>order info</h4>
-            <ul>
-              <li>
-                <p>order number</p><span>: {{orderDetails._id}}</span>
-              </li>
-              <li>
-                <p>date</p><span>: {{orderDetails.date}}</span>
-              </li>
-              <li>
-                <p>total</p><span>: {{orderDetails.total}}</span>
-              </li>
-              <li>
-                <p>payment methord</p><span>: {{orderDetails.paymentMethod}}</span>
-              </li>
-              <li>
-                <p>Order Status</p><span>: {{orderDetails.orderStatus}}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6 col-lx-4">
-          <div class="single_confirmation_details">
-            <h4>Billing Address</h4>
-            <ul>
-              <li>
-                <p>Name</p><span>: {{orderDetails.billingDetails.firstname}} {{orderDetails.billingDetails.lastname}}</span>
-              </li>
-              <li>
-                <p>Email</p><span>: {{orderDetails.billingDetails.email}}</span>
-              </li>
-              <li>
-                <p>Contact</p><span>: {{orderDetails.billingDetails.mobile}}</span>
-              </li>
-              
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6 col-lx-4">
-          <div class="single_confirmation_details">
-            <h4>shipping Address</h4>
-            <ul>
-              <li>
-                <p>Street</p><span>: {{orderDetails.addressDetail.addressLine}}</span>
-              </li>
-              <li>
-                <p>city</p><span>: {{orderDetails.addressDetail.addressCity}}</span>
-              </li>
-              <li>
-                <p>postcode</p><span>: {{orderDetails.addressDetail.addressZip}}</span>
-              </li>
-            </ul>
-          </div>
+<!--================ confirmation part start =================-->
+<section class="confirmation_part padding_top">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="confirmation_tittle">
+          <span>Thank you. Your order has been received.</span>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="order_details_iner">
-            <h3>Order Details</h3>
-            <table class="table table-borderless">
-              <thead>
-                <tr>
-                  <th scope="col" colspan="2">Product</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {{#each cart}}
-                <tr>
-                  <th colspan="2"><span>{{this.product.productname}}</span></th>
-                  <th>{{this.quantity}}</th>
-                  <th> <span>{{this.product.price}}</span></th>
-                </tr>
-                   {{/each}}
-                <tr>
-                  <th colspan="3">Subtotal</th>
-                  <th> <span>{{orderDetails.total}}</span></th>
-                </tr>
-                {{!-- <tr>
-                  <th colspan="3">shipping</th>
-                  <th><span>flat rate: $50.00</span></th>
-                </tr> --}}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="col" colspan="3">Quantity</th>
-                  <th scope="col">Total</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
+      <div class="col-lg-6 col-lx-4">
+        <div class="single_confirmation_details">
+          <h4>order info</h4>
+          <ul>
+            <li>
+              <p>order number</p><span>: {{orderDetails._id}}</span>
+            </li>
+            <li>
+              <p>date</p><span>: {{orderDetails.date}}</span>
+            </li>
+            <li>
+              <p>total</p><span>: {{orderDetails.total}}</span>
+            </li>
+            <li>
+              <p>payment methord</p><span>: {{orderDetails.paymentMethod}}</span>
+            </li>
+            <li>
+              <p>Order Status</p><span>: {{orderDetails.orderStatus}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6 col-lx-4">
+        <div class="single_confirmation_details">
+          <h4>Billing Address</h4>
+          <ul>
+            <li>
+              <p>Name</p><span>: {{orderDetails.billingDetails.firstname}}
+                {{orderDetails.billingDetails.lastname}}</span>
+            </li>
+            <li>
+              <p>Email</p><span>: {{orderDetails.billingDetails.email}}</span>
+            </li>
+            <li>
+              <p>Contact</p><span>: {{orderDetails.billingDetails.mobile}}</span>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6 col-lx-4">
+        <div class="single_confirmation_details">
+          <h4>shipping Address</h4>
+          <ul>
+            <li>
+              <p>Street</p><span>: {{orderDetails.addressDetail.addressLine}}</span>
+            </li>
+            <li>
+              <p>city</p><span>: {{orderDetails.addressDetail.addressCity}}</span>
+            </li>
+            <li>
+              <p>postcode</p><span>: {{orderDetails.addressDetail.addressZip}}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </section>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="order_details_iner">
+          <h3>Order Details</h3>
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col" colspan="2">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each cart}}
+              <tr>
+                <th colspan="2"><span>{{this.product.productname}}</span></th>
+                <th>{{this.quantity}}</th>
+                <th> <span>{{this.product.price}}</span></th>
+              </tr>
+              {{/each}}
+              <tr>
+                <th colspan="3">Subtotal</th>
+                <th> <span>{{orderDetails.total}}</span></th>
+              </tr>
+              {{!-- <tr>
+                <th colspan="3">shipping</th>
+                <th><span>flat rate: $50.00</span></th>
+              </tr> --}}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="col" colspan="3">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      var scroll = $(window).scrollTop();
+      if (scroll > 60) {
+        $(".navbar").css("background", "white");
+      }
+      else {
+        $(".navbar").css("background", "transparent");
+      }
+    })
+  })
+</script>

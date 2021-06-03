@@ -5,11 +5,11 @@ const productHelper          = require('../helpers/product_helper');
 const router                 = express.Router();
 const queryString            = require('query-string');
 const { response }           = require('express');
+const env                    = require('dotenv').config();
 const accountSid             = process.env.TWILIO_ACCOUNT_SID;
 const authToken              = process.env.TWILIO_AUTH_TOKEN;
 const serviceId              = process.env.TWILIO_SERVICE_ID;
 const twilio                 = require('twilio')(accountSid, authToken);
-const env                    = require('dotenv').config();
 const fs                     = require('fs')
 const jsonUtils              = require('../public/javascript/json_utils')     
 const imageToBase64          = require('image-to-base64');
@@ -306,7 +306,6 @@ router.get('/cart',productsLists,categoriesGet,verifyLogin,(req,res)=>{
 
 
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
-  
   let id    = req.params.id
   let userId  = req.session.user._id
   let count   = parseInt(req.query.count)
@@ -409,6 +408,7 @@ router.post('/checkout',categoriesGet,verifyLogin,async(req,res)=>{
               }
     userHelper.placeOrder(req.body,user,cart,coupon,subtotal).then((orderId)=>{
       req.session.orderId = orderId
+      console.log(req.body, "this is body chekout");
       if(req.body.selector==="rp"){
         userHelper.generateRazorpayOrder(orderId,subtotal).then((response)=>{
           response.username = user.firstname +" "+ user.lastname
@@ -417,6 +417,8 @@ router.post('/checkout',categoriesGet,verifyLogin,async(req,res)=>{
           console.log(response,"response from userhelper")
           res.json(response)
         })
+      }else if(req.body.selector==="pp"){
+        
       }else{
         console.log(orderId);
         res.json({codSuccess:true,order:orderId})

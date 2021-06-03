@@ -109,7 +109,7 @@
                         if (response.status) {
                             console.log("ajax");
                             console.log(response.status, response.email, response.mobile);
-                            $("#otp-register").replaceWith(`<form class="row contact_form" id="otp-register-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" name="otpinput" type="password" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> </div> </div> <br>  <button type="submit" value="submit" id="verifybutton" class="btn_3 d-flex justify-content-center"> Verify </button> <input type="email" id="emailhidden" name="user_emailhidden" value="" hidden> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
+                            $("#otp-register").replaceWith(`<form class="row contact_form" id="otp-register-submit" action="/" method="post"><div id="divOuter"> <div id="divInner"> <input id="partitioned" name="otpinput" type="password" maxlength="6"  onKeyPress="if(this.value.length==6) return false;"/> </div> </div> <br>  <button type="submit" value="submit" id="verifybutton" class="btn_3 d-flex justify-content-center"> Verify </button> <p style="color: red; display: none;" id="otp-incorrect">Incorrect OTP</p> <input type="email" id="emailhidden" name="user_emailhidden" value="" hidden> <input type="text" id="mobilehidden" name="mobilehidden" value="" hidden> </form>`);
                             document.getElementById('emailhidden').value = response.email
                             document.getElementById('mobilehidden').value = response.mobile
                             $("#resend-otp").show()
@@ -130,12 +130,9 @@
                                     }
                                 },
                                 submitHandler: function (e){
-                                    alert("slow")
-                                    
                                     let mobile = $('#mobilehidden').val()
                                     let email = $('#emailhidden').val()
                                     let otp = $('#partitioned').val()
-                                    
                                     $('#otp-incorrect').hide()
                                     $('#verifybutton').attr("disabled", true);
                                     $.ajax({

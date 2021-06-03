@@ -144,3 +144,17 @@
     </div>
 </section>
 <!--::subscribe_area part end::-->
+<script>
+    //scroll nav-bar color
+    $(function () {
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+            if (scroll > 820) {
+                $(".navbar").css("background", "white");
+            }
+            else {
+                $(".navbar").css("background", "transparent");
+            }
+        })
+    })
+</script>
