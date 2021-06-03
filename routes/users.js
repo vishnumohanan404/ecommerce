@@ -13,6 +13,7 @@ const twilio                 = require('twilio')(accountSid, authToken);
 const fs                     = require('fs')
 const jsonUtils              = require('../public/javascript/json_utils')     
 const imageToBase64          = require('image-to-base64');
+const paypal = require('paypal-rest-sdk');
 const verifyLogin            = (req, res, next) => {
                                  if (req.session.userLoggedIn) {
                                   next()
@@ -420,7 +421,12 @@ router.post('/checkout',categoriesGet,verifyLogin,async(req,res)=>{
           res.json(response)
         })
       }else if(req.body.selector==="pp"){
-
+        val = subtotal / 72
+        console.log(val)
+        subtotal = val.toFixed(2)
+        response.total = subtotal
+        response.paypal = true
+        res.json(response)
       }else{
         console.log(orderId);
         res.json({codSuccess:true,order:orderId})
@@ -439,6 +445,14 @@ router.post('/verify-payment',(req,res)=>{
     })
   }).catch(()=>{
     res.json({status:false})
+  })
+})
+
+router.post('/paypal-status-change', (req, res) => {
+  userHelper.updateOrderStatus(req.session.orderId, req.session.user._id).then((response) => {
+    res.json({ status: true })
+  }).catch((err) => {
+    res.json({ status: false })
   })
 })
 
