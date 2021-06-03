@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <p style="color: red; display: none;" id="error">User already exists</p>
-                                <button type="submit" value="submit" class="btn_3">
+                                <button type="submit" value="submit" class="btn_3" id="verifybutton1">
                                     Send OTP
                                 </button>
                                 <a class="text-right" href="/otp-login">Login with OTP</a>
@@ -53,7 +53,8 @@
         </div>
     </div>
 </section>
-<style>
+<style> 
+    /* this is not a good practice, try to make all css into a single file for each module */
     #partitioned {
         padding-left: 15px;
         letter-spacing: 40px;
@@ -99,6 +100,7 @@
                 $("#resend-otp").hide()
                 let mobile = $('#mobile').val()
                 let email = $('#email').val()
+                $('#verifybutton1').attr("disabled", true);
                 $.ajax({
                     url: '/verify-otp-register',
                     method: 'post',
@@ -114,8 +116,11 @@
                             document.getElementById('mobilehidden').value = response.mobile
                             $("#resend-otp").show()
                         } else if (response.error) {
+                            $('#verifybutton1').attr("disabled", false);
                             $('#mobile-incorrect').show()
+                            
                         } else {
+                            $('#verifybutton1').attr("disabled", false);
                             $('#error').show()
                         }
                         //2nd ajax on the same page after the success of first, this one is for the submit of verify button

@@ -168,7 +168,29 @@
 </section>
 
 <script>
-
+    $(function () {
+        $("#edit-profile").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                firstname: {
+                    required: true,
+                    minlength: 3
+                },
+                lastname:{
+                    required: true,
+                    minlength: 3
+                },
+                phone:{
+                    required: true,
+                    minlength: 10,
+                    digits : true
+                }
+            }
+        })
+    })
     $(document).ready(function () {
         var $modal = $('#modal_crop');
         var crop_image = document.getElementById('sample_image');

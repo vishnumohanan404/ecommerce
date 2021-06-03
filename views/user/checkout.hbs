@@ -48,16 +48,16 @@
           <h3 class="mb-0">Billing Details</h3>
           <form class="row contact_form" id="checkout-form">
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="first" name="firstname" placeholder="First name" />
+              <input type="text" class="form-control" id="first" name="firstname" placeholder="First name" value="{{user.firstname}}"/>
             </div>
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="last" name="lastname" placeholder="Last name" />
+              <input type="text" class="form-control" id="last" name="lastname" placeholder="Last name" value="{{user.lastname}}"/>
             </div>
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" />
+              <input type="text" class="form-control" id="number" name="number" placeholder="Phone number" value="{{user.phone}}"/>
             </div>
             <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="email" name="email" placeholder="Email Address">
+              <input type="text" class="form-control" id="email" name="email" placeholder="Email Address" value="{{user.email}}">
             </div>
             <h3 class="ml-3 mb-0 mt-4">Shipping Address</h3>
             <div class="col-md-12 form-group p_star">

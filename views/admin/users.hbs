@@ -31,9 +31,15 @@
                 <tbody>
                   {{#each users}}
                   <tr>
+                    {{#if this.firstname}}
                     <td>
                       {{this.firstname}}
                     </td>
+                    {{else}}
+                      <td>
+                      OTP User
+                    </td>
+                    {{/if}}
                     <td>
                       {{this.email}}
                     </td>

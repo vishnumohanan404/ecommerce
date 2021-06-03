@@ -24,7 +24,7 @@ router.get('/',verifyLogin,(req, res, next)=> {
     // date is a Date object you got, e.g. from MongoDB
     console.log(response.orderDetails);
     const map1 = orderDetails.map((orderDetails) =>orderDetails.date = moment(orderDetails.date).format("DD/MM/YY"));
-    console.log(response.orderDetails);
+    console.log(response.revenueData,"revenue data");
     console.log(map1);
     res.render('admin/admin-home',{admin,layout:'admin-layout.hbs',response,categoryDetails,orderDetails,revenueData,map1});
   })

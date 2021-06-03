@@ -12,7 +12,11 @@
                                 <h5 class="card-category">Name: </h5>
                             </td>
                             <td>
-                                <label class="ml-5">{{user.firstname}} {{user.lastname}}</label>
+                                {{#if user.firstname}}
+                                <label class="ml-5 pb-2">{{user.firstname}} {{user.lastname}}</label>
+                                {{else}}
+                                <label class="ml-5 pb-2">OTP User</label>
+                                {{/if}}
                             </td>
                         </tr>
                         <tr>
@@ -20,7 +24,7 @@
                                 <h5 class="card-category">Email: </h5>
                             </td>
                             <td>
-                                <label class="ml-5">{{user.email}}</label>
+                                <label class="ml-5 pb-2">{{user.email}}</label>
                             </td>
                         </tr>
                         <tr>
@@ -28,16 +32,18 @@
                                 <h5 class="card-category">Phone: </h5>
                             </td>
                             <td>
-                                <label class="ml-5">{{user.phone}}</label>
+                                <label class="ml-5 pb-2">{{user.phone}}</label>
                             </td>
                         </tr>
                         <tr>
+                            {{#if user.firstname}}
                             <td>
                                 <h5 class="card-category">Hashed Password: </h5>
                             </td>
                             <td>
                                 <label class="card-category ml-5 mb-3">{{user.password}}</label>
                             </td>
+                            {{/if}}
                         </tr>
                     </table>
                 </div>

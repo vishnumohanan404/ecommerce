@@ -184,7 +184,7 @@ module.exports  = {
                     }
                 }
             ]).toArray()
-            let orderDetails   = await db.get().collection(collections.ORDER_COLLECTION).find({cancel:false}).toArray()
+            let orderDetails   = await db.get().collection(collections.ORDER_COLLECTION).find({cancel:false,"cart.product.delivered":true}).toArray()
             let revenueData    = await db.get().collection(collections.ORDER_COLLECTION).find({cancel:false,"cart.product.delivered":true}).sort({_id:1}).limit(6).toArray();
             response.orderDetails    = orderDetails
             response.categoryDetails = categoryDetails

@@ -214,7 +214,9 @@ router.post('/otp-login-submit',categoriesGet,async (req,res)=>{
               req.session.userLoggedIn    = true
               res.json({status:true,user:req.session.user})
           })
+          console.log('otp correct')
         }else{
+          console.log('otp failed');
           res.json({status:false})
         }
       })
@@ -418,7 +420,7 @@ router.post('/checkout',categoriesGet,verifyLogin,async(req,res)=>{
           res.json(response)
         })
       }else if(req.body.selector==="pp"){
-        
+
       }else{
         console.log(orderId);
         res.json({codSuccess:true,order:orderId})
