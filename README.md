@@ -8,16 +8,16 @@ This is an ecommerce website using 3 modules, currently I am looking for contrib
 
 ## Getting Started
 
-### Dependencies
+### Setup
 
 * nodejs
 * mongodb
-* text-editor 
+* text-editor
 
 ### Installing
-
-* npm install
-
+```
+npm install
+```
 ### Executing program
 
 * Download or clone this repo into your local machine:
@@ -34,15 +34,18 @@ npm start
 * Common mistakes
 * Best Practices
 * Logical Fixes
-* Replacing unwanted async/await
+* Replacing unwanted async/await (cause I do that shit alot btw wft is asyncronomy :rofl:)
 * Or anything worth your time 😄
 
 
 
 
 ## Authors
-Vishnu Mohan
+King Kong
 
+## Conclusion
+If you are a beginner and want to get started with open source this is the best place for you cause you'll find a lot of common mistakes which beginners might make. At the least you will learn some git command on the way..
+Happy Coding
 
 ## Version History
 
