@@ -5,17 +5,18 @@ const path                         = require('path');
 const cookieParser                 = require('cookie-parser');
 const logger                       = require('morgan');
 const fileUpload                   = require('express-fileupload');
-var hbs                            = require('express-handlebars');
+const hbs                          = require('express-handlebars');
 const session                      = require('express-session')
 const db                           = require('./config/connection')
 const adminRouter                  = require('./routes/admin');
 const usersRouter                  = require('./routes/users');
 const vendorRouter                 = require('./routes/vendor')
 const app                          = express();
-var bodyParser                     = require('body-parser');
-var fs                             = require('fs');
-var helmet                         = require('helmet');
+const bodyParser                   = require('body-parser');
+const fs                           = require('fs');
+const helmet                       = require('helmet');
 const passport                     = require('passport')
+const flash                        = require('express-flash')
 require('./config/passport-setup.js');
 
 // view engine setup
@@ -62,10 +63,18 @@ app.use(function(req, res, next) {
                                    next();
                                  });
 app.use(session({secret:"Key",cookie:{maxAge:600000000}}))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false })) //bodyparser is depricated don't use this in production
 app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use(function(req, res, next){
+  // if there's a flash message in the session request, make it available 
+  // in the response, then delete it
+    res.locals.sessionFlash = req.session.sessionFlash;
+    delete req.session.sessionFlash;
+    next();
+  });
 
 // database connection call
 db.connect((err)=>{

@@ -1,23 +1,41 @@
 <style>
     .zoom1:after {
-			content:'';
-			display:block; 
-			width:33px; 
-			height:33px; 
-			position:absolute; 
-			top:0;
-			right:0;
-			background:url(icon.png);
-		}
+        content: '';
+        display: block;
+        width: 33px;
+        height: 33px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: url(icon.png);
+    }
 
-		.zoom1 img {
-			display: block;
-		}
+    .zoom1 img {
+        display: block;
+    }
 
-		.zoom1 img::selection { background-color: transparent; }
+    .zoom1 img::selection {
+        background-color: transparent;
+    }
 
-		#zoom img:hover { cursor: url(/zoom-master/grab.cur), default; }
-		#zoom img:active { cursor: url(/zoom-master/grabbed.cur), default; }
+    #zoom img:hover {
+        cursor: url(/zoom-master/grab.cur), default;
+    }
+
+    #zoom img:active {
+        cursor: url(/zoom-master/grabbed.cur), default;
+    }
+
+    .eng {
+        border-radius: 50%;
+        background-color: rgb(68, 223, 145);
+        box-shadow: 0px 10px 20px 0px rgba(153, 153, 153, 0.3);
+        width: 50px;
+        height: 50px;
+        line-height: 56px;
+        color: $font_3;
+        text-align: center;
+    }
 </style>
 <!-- breadcrumb start-->
 <section class="breadcrumb breadcrumb_bg">
@@ -40,6 +58,7 @@
 <!--================Single Product Area =================-->
 <div class="product_image_area section_padding">
     <div class="container">
+        <div id="myDiv"></div>
         <div class="row  justify-content-center">
             <div class="col-lg-6 col-xl-6 ">
                 <div class="product_slider_img">
@@ -63,7 +82,8 @@
                 <div class="s_product_text">
                     <h3>{{result.productname}}</h3>
                     {{#if result.discount}}
-                    <h4>{{result.offPercentage}}% Offer <i class="fas fa-tag"></i> Rs. <strike> {{result.actualPrice}}</strike></h4>
+                    <h4>{{result.offPercentage}}% Offer <i class="fas fa-tag"></i> Rs. <strike>
+                            {{result.actualPrice}}</strike></h4>
                     <h2>Rs. {{result.price}}</h2>
                     {{else}}
                     <h2>Rs. {{result.price}}</h2>
@@ -80,15 +100,24 @@
                     <p>
                         {{result.description}}
                     </p>
-                    <div class="card_area d-flex justify-content-between align-items-center">
-                        <div class="product_count">
-                            <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                            <input class="input-number" id="quantity" type="text" value="1" min="1" max="10">
-                            <span class="number-increment"> <i class="ti-plus"></i></span>
+                    <div id="addTocartI">
+                        <div class="card_area d-flex justify-content-between align-items-center">
+                            <div class="product_count">
+                                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                                <input class="input-number" id="quantity" type="text" value="1" min="1" max="10">
+                                <span class="number-increment"> <i class="ti-plus"></i></span>
+                            </div>
+                            <button onclick="addToCart('{{result._id}}')" class="btn_3">add to cart</button>
+                            {{#if wishlist}}
+                            <a onclick="removeWishlistItemFromProductsDetails('{{result._id}}')" class="eng" id="remove"> <i
+                                    class="ti-heart"></i> </a>
+                            {{else}}
+                            <a onclick="addToWishlistFromProductDetails('{{result._id}}')" class="like_us" id="remove"> <i
+                                    class="ti-heart"></i> </a>
+                            {{/if}}
                         </div>
-                        <button onclick="addToCart('{{result._id}}')" class="btn_3">add to cart</button>
-                        <a onclick="addToWishlist('{{result._id}}')" class="like_us"> <i class="ti-heart"></i> </a>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -117,14 +146,14 @@
 <!--================End Product Description Area =================-->
 <script>
     $(function () {
-    $(window).scroll(function () {
-      var scroll = $(window).scrollTop();
-      if (scroll > 500) {
-        $(".navbar").css("background", "white");
-      }
-      else {
-        $(".navbar").css("background", "transparent");
-      }
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+            if (scroll > 500) {
+                $(".navbar").css("background", "white");
+            }
+            else {
+                $(".navbar").css("background", "transparent");
+            }
+        })
     })
-  })
 </script>

@@ -60,6 +60,14 @@ module.exports={
         })
     },
 
+    checkWishlist: (id,user)=>{
+        console.log(id,user,"checkwislist");
+        return new Promise(async(resolve,reject)=>{
+            let wishlist = await db.get().collection(collections.WISHLIST_COLLECTION).findOne({user:user._id,"wishlist._id":ObjectId(id)})
+            resolve(wishlist)
+        })
+    },
+
     updateProduct: (id,body)=>{
         return new Promise(async(resolve,reject)=>{
             await db.get().collection(collections.PRODUCT_COLLECTION).updateOne({_id:ObjectId(id)},{

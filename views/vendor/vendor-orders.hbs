@@ -66,12 +66,16 @@
                                         <p class=" text-info"><span class="mr-4"
                                                 style="color: black; font-size:12px">Billing Name:</span>
                                             {{this.billingDetails.firstname}}</p>
+                                        <p class=" text-info"><span class="mr-4"
+                                                style="color: black; font-size:12px">Date:</span>
+                                            {{this.date}}</p>
                                     </td>
                                     <td>
                                         Rs.{{this.cart.productTotal}}
                                     </td>
                                     <td>
-                                        <a href="/vendor/view-order-details/{{this._id}}/{{this.cart.product._id}}" class="btn btn-outline-success">View</a>
+                                        <a href="/vendor/view-order-details/{{this._id}}/{{this.cart.product._id}}"
+                                            class="btn btn-outline-success">View</a>
                                     </td>
                                     <td>
                                         {{#if this.cart.product.status}}
@@ -138,7 +142,7 @@
                                                 </div>
                                                 {{/if}}
                                                 {{/if}}
-                                        {{/if}}        
+                                                {{/if}}
                                     </td>
                                 </tr>
                                 {{/each}}
@@ -172,7 +176,7 @@
         return false
     }
 
-    function deliver(productId, userId, orderId,quantity) {
+    function deliver(productId, userId, orderId, quantity) {
         $.ajax({
             url: '/vendor/deliver-product/',
             method: 'post',

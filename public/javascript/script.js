@@ -1,18 +1,18 @@
 function addToCart(productId) {
-  let count = document.getElementById("quantity").value
-  alert(count)
+  let count = document.getElementById("quantity").value;
+  alert(count);
   $.ajax({
     url: "/add-to-cart/" + productId,
     method: "get",
-    data: {productId:productId,count:count},
+    data: { productId: productId, count: count },
     success: (response) => {
       if (!response.status) {
         console.log("login");
-        document.getElementById("quantity").value=1
+        document.getElementById("quantity").value = 1;
         window.location.href = "/login";
       } else {
         console.log(status);
-        document.getElementById("quantity").value=1
+        document.getElementById("quantity").value = 1;
         let count = $("#cart-count").html();
         count = parseInt(count) + 1;
         $("#cart-count").html(count);
@@ -23,9 +23,11 @@ function addToCart(productId) {
 }
 
 function changeQuantity(cartId, productId, userId, count) {
-  let quantity = parseInt(document.getElementById(productId+"quantity").innerHTML);
+  let quantity = parseInt(
+    document.getElementById(productId + "quantity").innerHTML
+  );
   let counter = parseInt(count);
-  let cartlength = parseInt(document.getElementById('cartlength').value)
+  let cartlength = parseInt(document.getElementById("cartlength").value);
   $.ajax({
     url: "/change-quantity",
     data: {
@@ -39,24 +41,29 @@ function changeQuantity(cartId, productId, userId, count) {
     success: (response) => {
       if (response.removeProduct) {
         alert("Product removed");
-        if(cartlength===1){
+        if (cartlength === 1) {
           location.reload();
-        }else{
-          $("#container").load(" #container")
+        } else {
+          $("#container").load(" #container");
         }
       } else {
-        
-        document.getElementById(productId+"quantity").innerHTML = quantity + count;
+        document.getElementById(productId + "quantity").innerHTML =
+          quantity + count;
         document.getElementById("subtotal").innerHTML = response.subtotal;
-        number = (parseFloat(document.getElementById(productId+"quantity").innerHTML) * parseFloat(document.getElementById(productId+"price").innerHTML))
-        document.getElementById(productId+"totalprice").innerHTML = Math.round((number + Number.EPSILON)*100)/100;
+        number =
+          parseFloat(
+            document.getElementById(productId + "quantity").innerHTML
+          ) *
+          parseFloat(document.getElementById(productId + "price").innerHTML);
+        document.getElementById(productId + "totalprice").innerHTML =
+          Math.round((number + Number.EPSILON) * 100) / 100;
       }
     },
   });
 }
+let document1 = document.getElementById("remove")
 
 function addToWishlist(productId) {
-  alert(productId)
   $.ajax({
     url: "/add-to-wishlist/" + productId,
     method: "get",
@@ -65,7 +72,30 @@ function addToWishlist(productId) {
         console.log("login");
         window.location.href = "/login";
       } else {
-        console.log(status);
+        $(document1).removeClass("like_us"); 
+        $(document1).addClass("eng");
+        $("#addTocartI").load(" #addTocartI")
+        let count = $("#wishlist-count").html();
+        count = parseInt(count) + 1;
+        $("#wishlist-count").html(count);
+      }
+    },
+  });
+  return false;
+}
+
+function addToWishlistFromProductDetails(productId) {
+  $.ajax({
+    url: "/add-to-wishlist/" + productId,
+    method: "get",
+    success: (response) => {
+      if (!response.status) {
+        console.log("login");
+        window.location.href = "/login";
+      } else {
+        $(document1).removeClass("like_us"); 
+        $(document1).addClass("eng");
+        $("#addTocartI").load(" #addTocartI")
         let count = $("#wishlist-count").html();
         count = parseInt(count) + 1;
         $("#wishlist-count").html(count);
@@ -76,12 +106,11 @@ function addToWishlist(productId) {
 }
 
 function removeWishlistItem(productId) {
-  alert(productId)
   $.ajax({
     url: "/remove-wishlist-item/" + productId,
     method: "get",
     success: (response) => {
-      if (response.status){
+      if (response.status) {
         location.reload()
       }
     },
@@ -89,21 +118,36 @@ function removeWishlistItem(productId) {
   return false;
 }
 
-function moveToCart(id){
-  alert(id)
+function removeWishlistItemFromProductsDetails(productId) {
   $.ajax({
-    url:"/move-to-cart/"+id,
-    method:"get",
-    success:(response)=>{
-      if(response.status){
-        location.reload()
+    url: "/remove-wishlist-item/" + productId,
+    method: "get",
+    success: (response) => {
+      alert('oolala')
+      if (response.status) {
+        $(document1).removeClass("eng"); 
+        $(document1).addClass("like_us"); 
+        $("#addTocartI").load(" #addTocartI")
       }
-    }
+    },
   });
-  return false
+  return false;
 }
 
+function moveToCart(id) {
+  alert(id);
+  $.ajax({
+    url: "/move-to-cart/" + id,
+    method: "get",
+    success: (response) => {
+      if (response.status) {
+        location.reload();
+      }
+    },
+  });
+  return false;
+}
 
-    //script for custom search box
+//script for custom search box
 
 // getting all required elements

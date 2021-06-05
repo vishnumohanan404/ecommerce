@@ -107,6 +107,7 @@
     .navbar {
         padding: 0px 10px
     }
+    
 </style>
 {{!-- --}}
 <header class="main_menu home_menu">
@@ -153,7 +154,7 @@
                                 {{else}}
                                 <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-user"></i>
+                                    <i class="far fa-user mr-3"></i>
                                 </a>
                                 {{/if}}
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
@@ -189,13 +190,15 @@
                         </div>
                         {{!-- search test --}}
                         {{!-- <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a> --}}
-                        <div class="wrapper">
+                        <div class="wrapper d-flex inline" >
                             <a href="/profile" class=""><i class="far fa-user"></i></a>
                             <a href="/wishlist"><i class="fas fa-heart"></i></a>
-
-                            <a href="/cart" id="navbarDropdown3">
-                                <i class="fas fa-cart-plus"></i>
-                            </a>
+                            <div class="d-flex inline">
+                                
+                                <a href="/cart" id="navbarDropdown3">
+                                    <i class="fas fa-cart-plus"></i>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -226,7 +229,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-    
+
     // getting all required elements
     const searchWrapper = document.querySelector(".search-input");
     const inputBox = searchWrapper.querySelector("input");

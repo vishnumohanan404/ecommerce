@@ -283,10 +283,14 @@ router.get('/all-products',productsLists,categoriesGet,async(req,res)=>{
 
 router.get('/product-details/',productsLists,categoriesGet,async(req,res)=>{
   let id   = req.query.id
-  await productHelper.getProductDetails(id).then((result)=>{
-    let user = req.session.user;
-    res.render('user/product-details',{user,categories,result,productsList});
+  let user = req.session.user;
+  await productHelper.checkWishlist(id,user).then((wishlist)=>{
+    console.log(wishlist,"this is wishlist");
+    productHelper.getProductDetails(id).then((result)=>{
+      res.render('user/product-details',{user,categories,result,productsList,wishlist});
+    })
   })
+  
 })
 
 router.get('/all-products/:category',productsLists,categoriesGet,async(req,res)=>{
@@ -671,8 +675,9 @@ router.get('/wishlist',productsLists,categoriesGet,verifyLogin,async(req,res)=>{
 })
 
 router.get('/add-to-wishlist/:id',verifyLogin,(req,res)=>{
-  userHelper.addToWishlist(req.params.id,req.session.user._id).then(()=>{
+  userHelper.addToWishlist(req.params.id,req.session.user._id).then((result)=>{
     res.json({status:true})
+    // req.session.flash=null
   })
 })
 

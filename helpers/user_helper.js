@@ -812,25 +812,22 @@ module.exports={
                 user:userId,
                 wishlist:[product]
             }
-            console.log(userId);
-            console.log(wishlist);
-            console.log(product);
             if(wishlist){
                 if(productExist){
-                    resolve()
+                    resolve({status:"exist"})
                 }else{
                     db.get().collection(collections.WISHLIST_COLLECTION).updateOne({user:userId},{
                         $push:{
                             wishlist: product
                         }
                     }).then(()=>{
-                        resolve()
+                        resolve({status:false})
                     })
                 }
             }else{
                 db.get().collection(collections.WISHLIST_COLLECTION).insertOne(wishlistObj).then((result)=>{
                     console.log(result.ops[0]);
-                    resolve()
+                    resolve({status:false})
                 })
             }
         })
