@@ -13,7 +13,7 @@ const twilio                 = require('twilio')(accountSid, authToken);
 const fs                     = require('fs')
 const jsonUtils              = require('../public/javascript/json_utils')     
 const imageToBase64          = require('image-to-base64');
-const paypal = require('paypal-rest-sdk');
+const passport               = require('passport')
 const verifyLogin            = (req, res, next) => {
                                  if (req.session.userLoggedIn) {
                                   next()
@@ -45,19 +45,14 @@ let productsLists        = (req,res,next)=>{
 router.get('/',categoriesGet,productsLists,async function(req, res, next) {
   let user = req.session.user
   let list
-  console.log(user);
-  console.log(productsList,"hello user, thankyo");
   // function to change product list
-    
     list =productsList.map(x =>x.productname)
-    console.log(list);
   // 
   cartCount=null
   if (user) {
     cartCount = await userHelper.getCartCount(user._id);
   }
   productHelper.getRandomProducts().then((random)=>{
-    console.log(random);
     products = random
     res.render('user/home-page', {user,categories,products,cartCount,'data': list,productsList});
   })
@@ -72,10 +67,10 @@ router.get('/login',productsLists,categoriesGet,(req,res)=>{
   if(user){
     res.redirect('/')
   }else{
-      res.render('user/login',{"loginError" : req.session.userLoginError,"blockMessage":req.session.userBlocked,categories,productsList});
+      res.render('user/login',{"loginError" : req.session.userLoginError,"oauth":req.session.userOauth,"blockMessage":req.session.userBlocked,categories,productsList});
       req.session.userBlocked = null;
       req.session.userLoginError = null;
-   
+      req.session.userOauth = null
   }
 })
 
@@ -90,7 +85,11 @@ router.post('/login',(req,res)=>{
         console.log("user is Blocked");
         req.session.userBlocked       = "You are temporarily blocked"
         res.redirect('/login')
-      }else{
+      }else if(response.userOauth){
+        console.log("invalid password");
+        req.session.userOauth    = "This user don't have a password"
+        res.redirect('/login')
+      } else{
         console.log("invalid password");
         req.session.userLoginError    = "Invalid username or password"
         res.redirect('/login')
@@ -254,6 +253,22 @@ router.post('/signup',async (req,res)=>{
   }
 })
 
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
+}));
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    let user = req.user
+    userHelper.googleAuth(user).then((response)=>{
+      req.session.user = response
+      console.log(response,"this is our response object");
+      req.session.userLoggedIn = true;
+      res.redirect('/');
+    })
+  }
+);
 
 // product routes
 
@@ -498,6 +513,7 @@ router.get('/cancel-order/:id',categoriesGet,verifyLogin,(req,res)=>{
 })
 
 router.get('/profile',productsLists,verifyLogin,categoriesGet,(req,res)=>{
+  console.log("profile");
   let id = req.session.user._id
   let imageExist = false
   let path = './public/profile-pictures/'+id+'.jpeg'
@@ -506,6 +522,7 @@ router.get('/profile',productsLists,verifyLogin,categoriesGet,(req,res)=>{
      imageExist = true;
   }
   let user = req.session.user
+  console.log(user,"this is user._id");
   userHelper.getUserDetail(user._id).then((userDetails)=>{
     console.log(userDetails,"this is userDetails")
     res.render('user/view-profile',{user,userDetails,categories,"profileEditStatus":req.session.profileEditStatus,imageExist,productsList});

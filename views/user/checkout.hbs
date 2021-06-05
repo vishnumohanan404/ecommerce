@@ -261,10 +261,14 @@
         }
       },
       submitHandler: function () {
-        $("#checkout-form-submit").attr("disabled", true);
+
         var form = $('#checkout-form')[0];
         let dataform = new FormData(form)
         let selector = $(".message_pri:checked").val();
+        if (selector == "rp") {
+          $("#checkout-form-submit").attr("disabled", true);
+          $("#btnSubmit").attr("disabled", true);
+        }
         dataform.append('selector', selector);
         $.ajax({
           url: '/checkout',
@@ -275,11 +279,11 @@
           success: (response) => {
             if (response.codSuccess) {
               location.href = '/order-success'
-            } else if(response.paypal) {
-              
+            } else if (response.paypal) {
+
               paypal.Buttons({
                 createOrder: function (data, actions) {
-                  console.log(data,actions,"data and action")
+                  console.log(data, actions, "data and action")
                   return actions.order.create({
                     purchase_units: [{
                       amount: {
@@ -296,19 +300,28 @@
                   })
 
                 },
+                onError: function (err) {
+                  // For example, redirect to a specific error page
+                  location.reload();
+                },
                 onCancel: function (data) {
-                  alert("Payment Failed!!!")
+                  $(section).fadeOut(800, function () {
+                    section.html(msg).fadeIn().delay(2000);
+                  })
                 }
-              }).render('#paypal-payment-button');
-            }else {
-            razorpayPayment(response);
+              }).render('#paypal-payment-button')
+            } else {
+              razorpayPayment(response);
               $("#checkout-form-submit").attr("disabled", false);
+            }
+          },
+          complete: function (data) {
+            $("#btnSubmit").attr("disabled", false);
           }
-        }
         })
-  }
+      }
     });
-  return false
+    return false
   })
 
   function razorpayPayment(order) {
@@ -401,17 +414,17 @@
     return false
   }
   function paymentStatusChange(details) {
-        $.ajax({
-            url: '/paypal-status-change',
-            data: {
-                details
-            },
-            method: 'post',
-            success: (response) => {
-                if (response.status) {
-                    location.href = "/order-success"
-                }
-            }
-        })
-    }
+    $.ajax({
+      url: '/paypal-status-change',
+      data: {
+        details
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.status) {
+          location.href = "/order-success"
+        }
+      }
+    })
+  }
 </script>

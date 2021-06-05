@@ -12,11 +12,11 @@ const adminRouter                  = require('./routes/admin');
 const usersRouter                  = require('./routes/users');
 const vendorRouter                 = require('./routes/vendor')
 const app                          = express();
-const multer                       = require('multer');
 var bodyParser                     = require('body-parser');
 var fs                             = require('fs');
 var helmet                         = require('helmet');
-
+const passport                     = require('passport')
+require('./config/passport-setup.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -64,7 +64,8 @@ app.use(function(req, res, next) {
 app.use(session({secret:"Key",cookie:{maxAge:600000000}}))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+app.use(passport.initialize());
+app.use(passport.session());
 
 // database connection call
 db.connect((err)=>{

@@ -8,8 +8,6 @@ const env               = require('dotenv').config();
 const crypto            = require('crypto');
 var moment              = require('moment');
 var random              = require('random-key-generator');
-const { ObjectID } = require('bson');
-const { resolve } = require('path');
 var instance            = new Razorpay({
                             key_id: 'rzp_test_IKTD1Jw6ZMVbm7',
                             key_secret: 'BdRNzQv3Py0EQQPV1Q7624An',
@@ -45,25 +43,53 @@ module.exports={
         })
     },
 
+    googleAuth: (userData)=>{
+        return new Promise(async(resolve,reject)=>{
+            console.log("hello this is googleauth",userData)
+            userData.firstname = userData.given_name
+            userData.lastname  = userData.family_name
+            let user    = await db.get().collection(collections.USER_COLLECTION).findOne({email:userData.email})
+            if(user){
+                if(!user.blocked){
+                    resolve(user)
+                }else{
+                    reject()
+                }
+            }else{
+                await db.get().collection(collections.USER_COLLECTION).insertOne(userData).then((result)=>{
+                    resolve(result.ops[0])
+                })
+            }
+        })
+    },
+
     doLogin: (loginCredentials)=>{
         return new Promise(async (resolve,reject)=>{
             let user    = await db.get().collection(collections.USER_COLLECTION).findOne({email:loginCredentials.user_email})
             if(user){
                 if(!user.block){
-                    bcrypt.compare(loginCredentials.password,user.password).then((status)=>{
-                        if(status){
-                            response.userBlocked = false
-                            response.user   = user;
-                            response.status = true;
-                            resolve(response)
-                        }else{
-                            console.log("wrong Password");
-                            response.userBlocked = false
-                            console.log(false);
-                            response.status = false;
-                            resolve(response);
-                        }
-                    });
+                    if(user.password){
+                        bcrypt.compare(loginCredentials.password,user.password).then((status)=>{
+                            if(status){
+                                response.userBlocked = false
+                                response.user   = user;
+                                response.status = true;
+                                resolve(response)
+                            }else{
+                                console.log("wrong Password");
+                                response.userBlocked = false
+                                console.log(false);
+                                response.status = false;
+                                resolve(response);
+                            }
+                        });
+                    }else{
+                    response.userOauth = true
+                    response.status = false;
+                    console.log(response.status)
+                    resolve(response)
+                    }
+                    
                 }else{
                     response.userBlocked = true
                     response.status = false;

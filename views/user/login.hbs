@@ -22,7 +22,11 @@
                         {{#if loginError}}
                         <p>{{loginError}}</p>
                         {{else}}
+                        {{#if oauth}}
+                        <p>{{oauth}}</p>
+                        {{else}}
                         <p>{{blockMessage}}</p>
+                        {{/if}}
                         {{/if}}
                         <form class="row contact_form" action="/login" method="post" novalidate="novalidate" id="login">
                             <div class="col-md-12 form-group p_star">
@@ -41,9 +45,11 @@
                                 <button type="submit" value="submit" class="btn_3">
                                     Sign in
                                 </button>
-                                <button type="submit" value="google" class="btn_3 " disabled>
+                                <a href="/google"> 
+                                <button type="button" value="google" class="btn_3" style="text-align: center;">
                                     Sign in with google <i class="fab fa-google"></i>
                                 </button>
+                                </a>
                                 <a class="text-right" href="/otp-login">Login with OTP</a>
                                 <a class="lost_pass" href="">forget password?</a>
                             </div>
