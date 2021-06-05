@@ -34,7 +34,7 @@ npm start
 * Common mistakes
 * Best Practices
 * Logical Fixes
-* Replacing unwanted async/await (cause I do that shit alot btw wft is asyncronomy :rofl:)
+* Replacing unwanted async/await (cause I do that shit alot btw wft is asynchrony :rofl:)
 * Or anything worth your time 😄
 
 
