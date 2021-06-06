@@ -56,8 +56,23 @@ module.exports={
                     reject()
                 }
             }else{
+                userData.coupons        = [{coupon      :random.getRandom(3,'WEL','','front'),
+                                        couponType  :'Welcome Coupon',
+                                        couponDesc  : "Rs.200 Off",
+                                        offer       : 200,
+                                        status      : true}]
                 await db.get().collection(collections.USER_COLLECTION).insertOne(userData).then((result)=>{
-                    resolve(result.ops[0])
+                    let coupon      = {
+                        coupon      : result.ops[0].coupons[0].coupon,
+                        user        : result.ops[0]._id,
+                        couponType  : result.ops[0].coupons[0].couponType,
+                        couponDesc  : "Rs.200 Off",
+                        offer       : 200,
+                        status      : true
+                    }
+                    db.get().collection(collections.COUPON_COLLECTION).insertOne(coupon).then(()=>{
+                        resolve(result.ops[0])
+                    })
                 })
             }
         })
