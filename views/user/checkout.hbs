@@ -382,9 +382,7 @@
       data: { coupon: coupon },
       method: 'get',
       success: (response) => {
-        alert(response.status.checkCoupon.offer)
         if (response.status) {
-          console.log(response.status.checkCoupon.couponType)
           document.getElementById('coupon').value = ""
           document.getElementById('couponlabel').innerHTML = response.status.checkCoupon.coupon
           document.getElementById('coupon').disabled = true;
@@ -398,13 +396,11 @@
             document.getElementById('couponCode').value = response.status.checkCoupon.coupon
             document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
             document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
-            alert(document.getElementById('subtotalValue').innerHTML)
           } else if (response.status.checkCoupon.couponType === "Festival Coupon") {
             document.getElementById('couponApplied').value = "FST"
             document.getElementById('couponCode').value = response.status.checkCoupon.coupon
             document.getElementById('subtotalValue').innerHTML = parseFloat(subtotal - response.status.checkCoupon.offer)
             document.getElementById('subtotal').value = parseFloat(subtotal - response.status.checkCoupon.offer)
-            alert(document.getElementById('subtotalValue').innerHTML)
           }
         } else {
           document.getElementById('couponValid').style.display = 'block'

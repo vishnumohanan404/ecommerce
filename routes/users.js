@@ -16,7 +16,12 @@ const imageToBase64          = require('image-to-base64');
 const passport               = require('passport')
 const verifyLogin            = (req, res, next) => {
                                  if (req.session.userLoggedIn) {
-                                  next()
+                                  userHelper.getCartCount(req.session.user._id).then((result)=>{
+                                    cartCount = result
+                                    if(cartCount.length>0) {cartCount = cartCount[0].count}
+                                    
+                                    next()
+                                  })
                                  } else {
                                   
                                   res.redirect('/login')
@@ -48,9 +53,10 @@ router.get('/',categoriesGet,productsLists,async function(req, res, next) {
   // function to change product list
     list =productsList.map(x =>x.productname)
   // 
-  cartCount=null
+  cartCount=0
   if (user) {
     cartCount = await userHelper.getCartCount(user._id);
+    if(cartCount.length>0) {cartCount = cartCount[0].count}
   }
   productHelper.getRandomProducts().then((random)=>{
     products = random
@@ -273,32 +279,65 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 // product routes
 
 router.get('/all-products',productsLists,categoriesGet,async(req,res)=>{
-  let user   = req.session.user
- 
+  let user      = req.session.user
+  let cartCount = 0;
+  if(user){
+     await userHelper.getCartCount(req.session.user._id).then((result)=>{
+        if(result.length>0){
+          cartCount = result[0].count
+        }
+      })
+  }
   await productHelper.getAllProducts().then((products)=>{
     let length = products.length 
-    res.render('user/all-products',{user,products,length,categories,productsList});
+    res.render('user/all-products',{user, products, length, categories, productsList, cartCount});
   })
 })
 
 router.get('/product-details/',productsLists,categoriesGet,async(req,res)=>{
   let id   = req.query.id
   let user = req.session.user;
-  await productHelper.checkWishlist(id,user).then((wishlist)=>{
-    console.log(wishlist,"this is wishlist");
+  let wishlist = null
+  let cartCount= 0
+  if(user){
+      await productHelper.checkWishlist(id,user).then((result)=>{
+      wishlist = result
+        userHelper.getCartCount(req.session.user._id).then((result)=>{
+          if(result.length>0){
+            cartCount = result[0].count
+            productHelper.getProductDetails(id).then((result)=>{
+              res.render('user/product-details',{user,categories,result,productsList,wishlist,cartCount});
+            })
+          }else{
+            productHelper.getProductDetails(id).then((result)=>{
+              res.render('user/product-details',{user,categories,result,productsList,wishlist,cartCount});
+            })
+          }
+        })
+      })
+  }else{
     productHelper.getProductDetails(id).then((result)=>{
-      res.render('user/product-details',{user,categories,result,productsList,wishlist});
+      res.render('user/product-details',{user,categories,result,productsList,wishlist,cartCount});
     })
-  })
+  }
+  
+  
   
 })
 
 router.get('/all-products/:category',productsLists,categoriesGet,async(req,res)=>{
   let user   = req.session.user
   let category = req.params.category
+  let cartCount = null
   await productHelper.getAllCatProducts(category).then((products)=>{
+    if(user){
+        userHelper.getCartCount(req.session.user._id).then((result)=>{
+          cartCount = result
+          next()
+        })
+    }
     let length = products.length 
-    res.render('user/all-products',{user,products,length,categories,productsList});
+    res.render('user/all-products',{user,products,length,categories,productsList,cartCount});
   })
 })
 
@@ -309,16 +348,13 @@ router.get('/cart',productsLists,categoriesGet,verifyLogin,(req,res)=>{
   let subtotal    = 0
   let total       = 0
   let cartlength  = 0
-  console.log("hello");
   userHelper.getCart(user._id).then(async(cart)=>{
     cartlength=cart.length
     if(cart.length>0){
-      console.log(cart)
       total   = Math.abs(await userHelper.getTotal(req.session.user._id)) 
       subtotal     = Math.abs(await userHelper.getSubtotal(req.session.user._id)) 
-      res.render('user/user-cart', {user,categories,cart,cartlength,subtotal,total,productsList});
+      res.render('user/user-cart', {user,categories,cart,cartlength,subtotal,total,productsList,cartCount});
     }else{
-      console.log(cart)
       res.render('user/user-cart', {user,categories,'cart':false,subtotal,total,productsList});
     }
     
@@ -331,7 +367,6 @@ router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
   let id    = req.params.id
   let userId  = req.session.user._id
   let count   = parseInt(req.query.count)
-  console.log(req.params,req.query,"params is a good boy");
       userHelper.addToCart(id,userId,count).then(()=>{
         res.json({status:true})
       })
@@ -380,7 +415,7 @@ router.get('/checkout',productsLists,categoriesGet,verifyLogin,async(req,res)=>{
           break;
         }
       }
-      res.render('user/checkout',{user,categories,cart,subtotal,address,categories,discount,productsList});
+      res.render('user/checkout',{user,categories,cart,subtotal,address,categories,discount,productsList,cartCount});
     }else{
       res.redirect('/');
     }
@@ -491,7 +526,7 @@ router.get('/orders',productsLists,categoriesGet,verifyLogin,(req,res)=>{
   let pending = false;
   userHelper.getOrdersForUsers(user._id).then((orders)=>{
     console.log(orders,"orders are here in orders routes")
-    res.render('user/orders', {user,categories,'orders':orders,productsList});
+    res.render('user/orders', {user,categories,'orders':orders,productsList,cartCount});
   }).catch(()=>{
     res.redirect('/')
   })
@@ -502,7 +537,7 @@ router.get('/order-details/:id',productsLists,categoriesGet,verifyLogin,async(re
   let orderId = req.params.id
   await userHelper.getOrderDetails(orderId).then((orders)=>{
     console.log(orders,"orders in order-details")
-    res.render('user/order-details', {user,categories,orders,cart:orders.cart,productsList});
+    res.render('user/order-details', {user,categories,orders,cart:orders.cart,productsList,cartCount});
   }).catch(()=>{
     res.redirect('/')
   })
@@ -529,7 +564,7 @@ router.get('/profile',productsLists,verifyLogin,categoriesGet,(req,res)=>{
   console.log(user,"this is user._id");
   userHelper.getUserDetail(user._id).then((userDetails)=>{
     console.log(userDetails,"this is userDetails")
-    res.render('user/view-profile',{user,userDetails,categories,"profileEditStatus":req.session.profileEditStatus,imageExist,productsList});
+    res.render('user/view-profile',{user,userDetails,categories,"profileEditStatus":req.session.profileEditStatus,imageExist,productsList,cartCount});
     req.session.profileEditStatus = null
   })
 })
@@ -560,7 +595,7 @@ router.get('/edit-profile',productsLists,verifyLogin,categoriesGet,(req,res)=>{
   }
   userHelper.getUserDetail(user._id).then((userDetails)=>{
     console.log(userDetails,"this is userDetails")
-    res.render('user/edit-profile',{user,userDetails,categories,imageExist,imageB64,productsList});
+    res.render('user/edit-profile',{user,userDetails,categories,imageExist,imageB64,productsList,cartCount});
   })
 })
 
@@ -601,7 +636,7 @@ router.post('/delete-profile-picture',verifyLogin,(req,res)=>{
 
 router.get('/change-password',productsLists,verifyLogin,categoriesGet,(req,res)=>{
   let user = req.session.user
-  res.render('user/change-password',{user,categories,"passwordError" : req.session.userPasswordError,productsList})
+  res.render('user/change-password',{user,categories,"passwordError" : req.session.userPasswordError,productsList,cartCount})
   req.session.userPasswordError = null
 })
 
@@ -620,7 +655,7 @@ router.post('/change-password',verifyLogin,categoriesGet,(req,res)=>{
 router.get('/manage-address',productsLists,verifyLogin,categoriesGet,async (req,res)=>{
   let user = req.session.user
    await userHelper.getAddress(user._id).then((address)=>{
-    res.render('user/manage-address',{user,categories,address,productsList})
+    res.render('user/manage-address',{user,categories,address,productsList,cartCount})
   })
 })
 
@@ -645,7 +680,7 @@ router.post('/remove-address',verifyLogin,(req,res)=>{
 router.get('/coupons',productsLists,verifyLogin,(req,res)=>{
   let user = req.session.user
   userHelper.getAllCoupons(user._id).then((coupons)=>{
-    res.render('user/all-coupons',{user,coupons,productsList})
+    res.render('user/all-coupons',{user,coupons,productsList,cartCount})
   })
 })
 
@@ -670,7 +705,7 @@ router.get('/repeat-order',categoriesGet,verifyLogin,(req,res)=>{
 router.get('/wishlist',productsLists,categoriesGet,verifyLogin,async(req,res)=>{
   let user = req.session.user
   await userHelper.getWishlist(user._id).then((wishlist)=>{
-    res.render('user/wishlist', {user,categories,wishlist,productsList});
+    res.render('user/wishlist', {user,categories,wishlist,productsList,cartCount});
   })
 })
 

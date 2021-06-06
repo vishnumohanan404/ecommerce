@@ -107,10 +107,9 @@
     .navbar {
         padding: 0px 10px
     }
-    
 </style>
 {{!-- --}}
-<header class="main_menu home_menu">
+<header class="main_menu home_menu" >
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12">
@@ -175,7 +174,7 @@
                             {{/if}}
                         </ul>
                     </div>
-                    <div class="hearer_icon d-flex">
+                    <div class="hearer_icon d-flex" >
                         {{!-- search test --}}
                         <div class="wrapper ">
                             <div class="search-input ">
@@ -193,11 +192,14 @@
                         <div class="wrapper d-flex inline" >
                             <a href="/profile" class=""><i class="far fa-user"></i></a>
                             <a href="/wishlist"><i class="fas fa-heart"></i></a>
-                            <div class="d-flex inline">
-                                
+                            <div class="d-flex inline" >
+                                <div>
                                 <a href="/cart" id="navbarDropdown3">
                                     <i class="fas fa-cart-plus"></i>
+                                    <span class="badge badge-success" id="cart-count">{{cartCount}}</span>
                                 </a>
+                                </div>
+                                
                             </div>
                         </div>
 

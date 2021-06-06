@@ -1,23 +1,23 @@
 function addToCart(productId) {
   let count = document.getElementById("quantity").value;
-  alert(count);
   $.ajax({
     url: "/add-to-cart/" + productId,
     method: "get",
     data: { productId: productId, count: count },
     success: (response) => {
+      console.log("in success of ajax add to cart")
       if (!response.status) {
         console.log("login");
         document.getElementById("quantity").value = 1;
         window.location.href = "/login";
       } else {
-        console.log(status);
+        
         document.getElementById("quantity").value = 1;
-        let count = $("#cart-count").html();
-        count = parseInt(count) + 1;
-        $("#cart-count").html(count);
+        let cartCount = $("#cart-count").html();
+        cartCount = parseInt(cartCount) + 1;
+        $("#cart-count").html(cartCount);
       }
-    },
+    }
   });
   return false;
 }
@@ -61,7 +61,7 @@ function changeQuantity(cartId, productId, userId, count) {
     },
   });
 }
-let document1 = document.getElementById("remove")
+let document1 = document.getElementById("remove");
 
 function addToWishlist(productId) {
   $.ajax({
@@ -72,9 +72,9 @@ function addToWishlist(productId) {
         console.log("login");
         window.location.href = "/login";
       } else {
-        $(document1).removeClass("like_us"); 
+        $(document1).removeClass("like_us");
         $(document1).addClass("eng");
-        $("#addTocartI").load(" #addTocartI")
+        $("#addTocartI").load(" #addTocartI");
         let count = $("#wishlist-count").html();
         count = parseInt(count) + 1;
         $("#wishlist-count").html(count);
@@ -93,9 +93,9 @@ function addToWishlistFromProductDetails(productId) {
         console.log("login");
         window.location.href = "/login";
       } else {
-        $(document1).removeClass("like_us"); 
+        $(document1).removeClass("like_us");
         $(document1).addClass("eng");
-        $("#addTocartI").load(" #addTocartI")
+        $("#addTocartI").load(" #addTocartI");
         let count = $("#wishlist-count").html();
         count = parseInt(count) + 1;
         $("#wishlist-count").html(count);
@@ -111,7 +111,7 @@ function removeWishlistItem(productId) {
     method: "get",
     success: (response) => {
       if (response.status) {
-        location.reload()
+        location.reload();
       }
     },
   });
@@ -123,11 +123,11 @@ function removeWishlistItemFromProductsDetails(productId) {
     url: "/remove-wishlist-item/" + productId,
     method: "get",
     success: (response) => {
-      alert('oolala')
+      alert("oolala");
       if (response.status) {
-        $(document1).removeClass("eng"); 
-        $(document1).addClass("like_us"); 
-        $("#addTocartI").load(" #addTocartI")
+        $(document1).removeClass("eng");
+        $(document1).addClass("like_us");
+        $("#addTocartI").load(" #addTocartI");
       }
     },
   });

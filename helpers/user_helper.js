@@ -183,6 +183,8 @@ module.exports={
                         $push:{
                             products:productObject
                         }
+                    }).then(()=>{
+                        resolve()
                     })
                 }
             }else{
@@ -204,7 +206,28 @@ module.exports={
                 user: ObjectId(id)
             })
             if(cart){
-                count = cart.products.length
+                 count = await db.get().collection(collections.CART_COLLECTION).aggregate([
+                    {
+                        $match:{
+                            user:ObjectId(id)
+                        }
+                    },
+                    {
+                        $unwind:"$products"
+                    },
+                    {
+                        $project:{
+                            "products":1,
+                            "count":{$sum:"$products.quantity"}
+                        }
+                    },
+                    {
+                        $group:{
+                            _id:'',
+                            count:{"$sum":"$count"}
+                        }
+                    }
+                ]).toArray()
             }
             resolve(count)
         })
