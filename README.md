@@ -4,7 +4,7 @@ This is a complete beginner's project, so any kind of contributions and bug fixe
 
 ## Description
 
-This is an ecommerce website using 3 modules, currently I am looking for contributions in bug fixes and syntactical mistakes (looking for better syntax and practices) getting fixed in the user module without breaking the current functionalities.
+This is an e-commerce website with 3 modules, currently I am looking for contributions in bug fixes(if any) and syntactical mistakes (looking for better syntax and practices) getting fixed in the user module without breaking the current functionalities.
 
 ## Getting Started
 
@@ -28,20 +28,20 @@ git clone https://github.com/KingKong26/ecommerce.git
 ```
 npm start
 ```
+* Setup environment variables in .env file in root directory
 
 ## Help
 * Syntactical errors.
 * Common mistakes
 * Best Practices
-* Logical Fixes
-* Replacing unwanted async/await (cause I do that shit alot btw wft is asynchrony :rofl:)
+* Better time-complexity solutions
 * Or anything worth your time 😄
 
 
 
 
 ## Authors
-King Kong
+* Vishnu Mohan
 
 ## Conclusion
 If you are a beginner and want to get started with open source this is the best place for you cause you'll find a lot of common mistakes which beginners might make. At the least you will learn some git command on the way..
@@ -61,3 +61,7 @@ This project is licensed under the Vishnu Mohan License
 Inspiration, code snippets, etc.
 * [StackOverFlow](https://stackoverflow.com/)
 * [GitHub](https://github.com/)
+
+## Live
+
+* [Mobel](https://vishwasam.com)
