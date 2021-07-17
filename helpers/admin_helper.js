@@ -225,7 +225,7 @@ module.exports  = {
                         { 
                             price         : { $multiply: [ offer, "$price" ] },
                             discount      : true,
-                            offPercentage : offPerc,
+                            offPercentage : parseInt(offPerc),
                             catOff        : true,
                             actualPrice   : "$price",
                             discountPrice : { $multiply: [ offer, "$price" ] }
@@ -239,7 +239,7 @@ module.exports  = {
                 [{ $set: 
                     { 
                         offer      : false,
-                        offPercentage : offPerc,
+                        offPercentage : parseInt(offPerc),
                     } 
                 }]
                 ).then((result)=>{
@@ -251,7 +251,7 @@ module.exports  = {
                 [{ $set: 
                     { 
                         offer      : true,
-                        offPercentage : offPerc,
+                        offPercentage : parseInt(offPerc),
                     } 
                 }]
                 ).then((result)=>{
