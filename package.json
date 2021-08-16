@@ -32,7 +32,7 @@
     "query-string": "^7.0.0",
     "random-key-generator": "^1.2.3",
     "razorpay": "^2.0.6",
-    "twilio": "^3.61.0"
+    "twilio": "^3.66.0"
   },
   "devDependencies": {
     "supervisor": "^0.12.0"
