@@ -23,7 +23,7 @@
     "http-errors": "^1.6.3",
     "image-to-base64": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "mongodb": "^3.6.6",
     "morgan": "^1.9.1",
     "passport": "^0.4.1",
